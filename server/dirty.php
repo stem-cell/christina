@@ -2,22 +2,9 @@
 
 // This script will be cleaned up.
 
-// Get required credentials and connect to the local database.
-// The PDO object will be cached as a global variable for extra optimization.
-// Kinda sad that we can't serialize the PDO object for moar caching goodness.
-function connectToDatabase() {
-    $auth = cache('pdo_bear', function() {
-        return SfYaml::parse('../config/database.yml')['production'];
-    });
-    if (isset($GLOBALS['pdo_bear'])) return $GLOBALS['pdo_bear'];
-    $dsn = $auth['adapter'].':host='.$auth['host'].';dbname='.$auth['database'];
-    $pdo_bear = new PDO($dsn, $auth['username'], $auth['password']);
-    return $GLOBALS['pdo_bear'] = $pdo_bear;
-}
-
 // Get information about a post, by numerical ID.
 function getPost($id) {
-    $pdo = connectToDatabase();
+    $pdo = DB::connect();
     $query = $pdo->query("SELECT * FROM posts WHERE id = $id");
     $row = $query->fetchObject();
     return $row;
@@ -26,7 +13,7 @@ function getPost($id) {
 // Gets a (textual) list of tags for a post as an array. No tags are prefixed, except for rating:N.
 function getTagsForPost($post) {
     if (!is_array($post) or !isset($post['id'])) return array();
-    $pdo = connectToDatabase();
+    $pdo = DB::connect();
     $id = $post['id'];
     $sql = "SELECT name FROM tags JOIN posts_tags ON tag_id = tags.id JOIN posts ON post_id = posts.id WHERE post_id = $id";
     $query = $pdo->query($sql);
@@ -43,7 +30,7 @@ function getBlackList($userId) {
     if ($id < 1) {
         $blacklist = (new Moebooru_Config())->default_blacklists;
     } else {
-        $pdo = connectToDatabase();
+        $pdo = DB::connect();
         $query = $pdo->query("SELECT tags FROM user_blacklisted_tags WHERE user_id = $id");
         $rows = $query->fetchAll(PDO::FETCH_NUM);
         $blacklist = preg_split("/\r\n|\n|\r/", $rows[0][0]);
