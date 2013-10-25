@@ -4,7 +4,7 @@
 $rootFiles = ''; // Regular expression.
 $rootFolders = 'server'; // Regular expression.
 $pharFile = __DIR__.'/release/christina.phar';
-$stub = __DIR__.'/phar-stub.php'
+$stub = __DIR__.'/phar-stub.php';
 
 if (!\Phar::canWrite())
 {
