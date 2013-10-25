@@ -19,4 +19,3 @@ class DB
 	    return $GLOBALS['pdo_bear'] = $pdo_bear;
 	}
 }
-

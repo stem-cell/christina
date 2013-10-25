@@ -4,12 +4,14 @@
 class Query
 {
     // Is the query a valid post query?
-    function isPost() {
+    function isPost()
+    {
         return isset($_GET['post']) and filter_var($_GET['post'], FILTER_VALIDATE_INT) !== false;
     }
 
     // Is the query asking for JSON?
-    function isJson() {
+    function isJson()
+    {
         return isset($_GET['format']) and $_GET['format'] == 'json';
     }
 }

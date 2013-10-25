@@ -16,7 +16,7 @@ class Posts
 	function getTags($post)
 	{
 	    if (!is_array($post) or !isset($post['id'])) return array();
-	    
+
 	    $pdo = DB::connect();
 	    $id = $post['id'];
 	    $sql = "SELECT name FROM tags INNER JOIN posts_tags ON tag_id = tags.id INNER JOIN posts ON post_id = posts.id WHERE post_id = $id";
