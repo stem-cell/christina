@@ -3,5 +3,5 @@
 
 $pharFilename = basename(__FILE__);
 Phar::mapPhar($pharFilename);
-require "phar://$pharFilename/boot.php";
+require "phar://$pharFilename/server/boot.php";
 __HALT_COMPILER();
