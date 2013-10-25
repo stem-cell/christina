@@ -10,3 +10,4 @@ using('posts');
 using('blacklists');
 using('query');
 using('response');
+using('logic');
