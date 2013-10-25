@@ -1,5 +1,6 @@
 <?php namespace Christina;
 
+// Class that handles database stuff.
 class DB
 {
 	// Get required credentials and connect to the local database.

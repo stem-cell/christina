@@ -6,3 +6,4 @@ using('constants');
 using('yaml');
 using('cache');
 using('database');
+using('posts');
