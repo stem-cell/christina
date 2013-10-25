@@ -2,16 +2,6 @@
 
 // This script will be cleaned up.
 
-// Is the query a valid post query?
-function isPostQuery() {
-    return isset($_GET['post']) and filter_var($_GET['post'], FILTER_VALIDATE_INT) !== false;
-}
-
-// Is the query asking for JSON?
-function isJsonQuery() {
-    return isset($_GET['format']) and $_GET['format'] == 'json';
-}
-
 // Gets the URL for the resized image (or original if no resized image present)
 // of a post, and assumes a valid array map of the respective database row.
 // The returned URL will be an absolute URL (starting with slash), without host.
@@ -131,7 +121,7 @@ function showBlacklistedImage() {
 // This script may now be called also as a require.
 if (!$GLOBALS['disable-hhhz']) {
     // Let's do our thing.
-    if (isPostQuery()) {
+    if (Query::isPost()) {
         
         $id = intval($_GET['post']);
         $post = Posts::get($id);
@@ -147,7 +137,7 @@ if (!$GLOBALS['disable-hhhz']) {
             $display = CHRISTINA_404;
         }
         
-        if (isJsonQuery()) {
+        if (Query::isJson()) {
             $response = array(
                 'version' => CHRISTINA_VERSION,
                 'success' => !!$post,

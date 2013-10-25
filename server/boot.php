@@ -8,3 +8,4 @@ using('cache');
 using('database');
 using('posts');
 using('blacklists');
+using('query');
