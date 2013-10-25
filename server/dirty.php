@@ -2,22 +2,6 @@
 
 // This script will be cleaned up.
 
-// Gets the URL for the resized image (or original if no resized image present)
-// of a post, and assumes a valid array map of the respective database row.
-// The returned URL will be an absolute URL (starting with slash), without host.
-function postImageUrl($post) {
-    if (!isset($post['md5'], $post['file_ext'])) throw new Exception();
-    $md5 = $post['md5'];
-    $ext = $post['file_ext'];
-    $base = '/data';
-    // Prefer a resized sample.
-    if (@$post['sample_size']) {
-        return "$base/sample/$md5.jpg";
-    }
-    // Otherwise just serve the original.
-    return "$base/image/$md5.$ext";
-}
-
 // This script may now be called also as a require.
 if (!$GLOBALS['disable-hhhz']) {
     // Let's do our thing.
@@ -30,7 +14,7 @@ if (!$GLOBALS['disable-hhhz']) {
         $tags = Posts::getTags($postArray);
         
         try {
-            $display = postImageUrl((array)$post);
+            $display = Posts::imageUrl((array)$post);
         } catch (Exception $e) {
             print_r((array)$post);
             exit;
