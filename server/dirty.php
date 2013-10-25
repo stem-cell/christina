@@ -2,33 +2,6 @@
 
 // This script will be cleaned up.
 
-// Gets the blacklist for a user as an array. No tags are prefixed, except for rating:N.
-// If $userId is not a positive integer, it will return the default (guest) blacklist.
-function getBlackList($userId) {
-    $id = intval($userId);
-    if ($id < 1) {
-        $blacklist = (new Moebooru_Config())->default_blacklists;
-    } else {
-        $pdo = DB::connect();
-        $query = $pdo->query("SELECT tags FROM user_blacklisted_tags WHERE user_id = $id");
-        $rows = $query->fetchAll(PDO::FETCH_NUM);
-        $blacklist = preg_split("/\r\n|\n|\r/", $rows[0][0]);
-    }
-    $blacklist = preg_replace('/\b(?!rating:)[a-z]+:/i', '', $blacklist);
-    if (count($blacklist) == 1 and $blacklist[0] == '') return array();
-    return $blacklist;
-}
-
-// Given a list of tags and a blacklist, see if the post is blacklisted.
-function isBlacklisted($tags, $blacklist) {
-    foreach ($blacklist as $blacklisted) {
-        foreach ($tags as $tag) {
-            if ($tag == $blacklisted) return true;
-        }
-    }
-    return false;
-}
-
 // Is the query a valid post query?
 function isPostQuery() {
     return isset($_GET['post']) and filter_var($_GET['post'], FILTER_VALIDATE_INT) !== false;
@@ -162,7 +135,7 @@ if (!$GLOBALS['disable-hhhz']) {
         
         $id = intval($_GET['post']);
         $post = Posts::get($id);
-        $blacklist = getBlackList(@$_COOKIE['user_id']);
+        $blacklist = BlackLists::get(@$_COOKIE['user_id']);
         $postArray = $post ? (array)$post : array();
         $tags = Posts::getTags($postArray);
         
@@ -182,12 +155,12 @@ if (!$GLOBALS['disable-hhhz']) {
                 'raw' => $postArray,
                 'tags' => $tags
             );
-            $response['blacklisted'] = isBlacklisted($tags, $blacklist);
+            $response['blacklisted'] = Blacklists::check($tags, $blacklist);
             $json = json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
             echo $json;
         } else {
             if ($post) {
-                if (isBlacklisted($tags, $blacklist)) {
+                if (Blacklists::check($tags, $blacklist)) {
                     showBlacklistedImage();
                     exit();
                 } else {
