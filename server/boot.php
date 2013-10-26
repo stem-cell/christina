@@ -10,4 +10,5 @@ using('posts');
 using('blacklists');
 using('query');
 using('response');
+using('image');
 using('logic');
