@@ -4,7 +4,7 @@
 class Posts
 {
 	// Get information about a post, by numerical ID.
-	function get($id)
+	static function get($id)
 	{
 	    $pdo = DB::connect();
 	    $query = $pdo->query("SELECT * FROM posts WHERE id = $id");
@@ -13,7 +13,7 @@ class Posts
 	}
 
 	// Gets a (textual) list of tags for a post as an array. No tags are prefixed, except for rating:N.
-	function getTags($post)
+	static function getTags($post)
 	{
 	    if (!is_array($post) or !isset($post['id'])) return array();
 
@@ -30,7 +30,7 @@ class Posts
 	// Gets the URL for the resized image (or original if no resized image present)
 	// of a post, and assumes a valid array map of the respective database row.
 	// The returned URL will be an absolute URL (starting with slash), without host.
-	function imageUrl($post) {
+	static function imageUrl($post) {
 	    if (!isset($post['md5'], $post['file_ext'])) throw new Exception();
 	    $md5 = $post['md5'];
 	    $ext = $post['file_ext'];

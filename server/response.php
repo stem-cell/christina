@@ -3,7 +3,7 @@
 class Response
 {
     // Shows the image that tells the user this post was blacklisted by him.
-    function showBlacklistedImage()
+    static function showBlacklistedImage()
     {
         // This is going to change in the future. Using a Phar archive means
         // this won't be so ugly anymore :) Wait and see.
@@ -90,7 +90,7 @@ class Response
 
     // Tells the browser not to bother making a request next time as the content
     // will stay the same. A basic kind of optimization.
-    function someThingsNeverChange()
+    static function someThingsNeverChange()
     {
         // Note that HTTP 1.1 states that the date shouldn't be more than one year
         // into the future. See section 14.21 ("Expires") of RFC 2616 (HTTP 1.1),
@@ -100,7 +100,7 @@ class Response
     }
 
     // I don't blame you 'cause most of the time I don't, either :)
-    function youProbablyDontKnowWhatYouAreDoing()
+    static function youProbablyDontKnowWhatYouAreDoing()
     {
         echo nl2br("HypnoHub Hover Zoom ".CHRISTINA_VERSION." API endpoint"
                   ." - please provide a valid query, my young grasshopper. \n\n");

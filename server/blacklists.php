@@ -4,7 +4,7 @@ class Blacklists
 {
     // Gets the blacklist for a user as an array. No tags are prefixed, except for rating:N.
     // If $userId is not a positive integer, it will return the default (guest) blacklist.
-    function get($userId)
+    static function get($userId)
     {
         $id = intval($userId);
         
@@ -28,7 +28,7 @@ class Blacklists
     }
 
     // Given a list of tags and a blacklist, see if the post is blacklisted.
-    function check($tags, $blacklist)
+    static function check($tags, $blacklist)
     {
         foreach ($blacklist as $blacklisted)
         {

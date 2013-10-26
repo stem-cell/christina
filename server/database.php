@@ -6,7 +6,7 @@ class DB
 	// Get required credentials and connect to the local database.
 	// The PDO object will be cached as a global variable for extra optimization.
 	// Kinda sad that we can't serialize the PDO object for moar caching goodness.
-	function connect()
+	static function connect()
 	{
 	    $auth = cache('pdo_bear', function() {
 	        return SfYaml::parse('../config/database.yml')['production'];
