@@ -56,7 +56,7 @@ function cache($name, $fallback)
     {
         // Better than no optimization at all.
         static $sessionStarted = false;
-        session_name('hhhz-session');
+        session_name('christina-session');
 
         if (!$sessionStarted)
         {
