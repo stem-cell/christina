@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 $pharFilename = basename(__FILE__);
