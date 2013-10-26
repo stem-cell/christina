@@ -2,7 +2,7 @@
 
 // Configuration.
 $rootFiles = ''; // Regular expression.
-$rootFolders = 'server'; // Regular expression.
+$rootFolders = 'server|images'; // Regular expression.
 $pharFile = __DIR__.'/release/christina.phar';
 $stub = __DIR__.'/phar-stub.php';
 
