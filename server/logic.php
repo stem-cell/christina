@@ -11,7 +11,7 @@ if (Query::isPost()) {
     
     try {
         $display = Posts::imageUrl((array)$post);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         print_r((array)$post);
         exit;
         $display = CHRISTINA_404;

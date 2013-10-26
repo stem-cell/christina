@@ -1,5 +1,7 @@
 <?php namespace Christina;
 
+use \Symfony\Component\Yaml\Yaml as SfYaml;
+
 // Class that handles database stuff.
 class DB
 {
@@ -15,7 +17,7 @@ class DB
 	    if (isset($GLOBALS['pdo_bear'])) return $GLOBALS['pdo_bear'];
 
 	    $dsn = $auth['adapter'].':host='.$auth['host'].';dbname='.$auth['database'];
-	    $pdo_bear = new PDO($dsn, $auth['username'], $auth['password']);
+	    $pdo_bear = new \PDO($dsn, $auth['username'], $auth['password']);
 	    return $GLOBALS['pdo_bear'] = $pdo_bear;
 	}
 }

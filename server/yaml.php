@@ -8,4 +8,3 @@ using('../vendor/Symfony/Component/Yaml/Parser.php');
 using('../vendor/Symfony/Component/Yaml/Inline.php');
 using('../config/default_config.php');
 using('../config/config.php');
-use Symfony\Component\Yaml\Yaml as SfYaml;
