@@ -14,8 +14,7 @@ class Blacklists
         }
         else
         {
-            $query = DB::query('getBlacklistForUser', ['id' => $id]);
-            $rows = $query->fetchAll(\PDO::FETCH_NUM);
+            $rows = DB::rows('blacklistForUser', $id);
             $blacklist = preg_split("/\r\n|\n|\r/", $rows[0][0]);
         }
 

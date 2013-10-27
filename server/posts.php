@@ -6,18 +6,14 @@ class Posts
 	// Get information about a post, by numerical ID.
 	static function get($id)
 	{
-	    $pdo = DB::connect();
-	    $query = DB::query('getPostById', ['id' => $id]);
-	    $row = $query->fetchObject();
-	    return $row;
+	    return DB::object('postById', $id);
 	}
 
 	// Gets a (textual) list of tags for a post as an array. No tags are prefixed, except for rating:N.
 	static function getTags($post)
 	{
 	    if (!is_array($post) or !isset($post['id'])) return array();
-	    $query = DB::query('getTagsForPost', ['id' => intval($post['id'])]);
-	    $rows = $query->fetchAll(\PDO::FETCH_NUM);
+	    $rows = DB::rows('tagsForPost', $post['id']);
 	    $list = array_map(function($i) { return $i[0]; }, $rows);
 	    $list[] = 'rating:'.$post['rating'];
 	    return $list;
