@@ -20,4 +20,11 @@ class DB
 	    $pdo_bear = new \PDO($dsn, $auth['username'], $auth['password']);
 	    return $GLOBALS['pdo_bear'] = $pdo_bear;
 	}
+
+	// Simplify making a query.
+	static function query($sql)
+	{
+		$pdo = self::connect();
+		return $pdo->query($sql);
+	}
 }
