@@ -14,8 +14,7 @@ class Blacklists
         }
         else
         {
-            $pdo = DB::connect();
-            $query = $pdo->query("SELECT tags FROM user_blacklisted_tags WHERE user_id = $id");
+            $query = DB::query('getBlacklistForUser', ['id' => $id]);
             $rows = $query->fetchAll(\PDO::FETCH_NUM);
             $blacklist = preg_split("/\r\n|\n|\r/", $rows[0][0]);
         }

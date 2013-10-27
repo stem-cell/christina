@@ -7,7 +7,7 @@ class Posts
 	static function get($id)
 	{
 	    $pdo = DB::connect();
-	    $query = DB::query("SELECT * FROM posts WHERE id = $id");
+	    $query = DB::query('getPostById', ['id' => $id]);
 	    $row = $query->fetchObject();
 	    return $row;
 	}
@@ -16,10 +16,7 @@ class Posts
 	static function getTags($post)
 	{
 	    if (!is_array($post) or !isset($post['id'])) return array();
-
-	    $id = $post['id'];
-	    $sql = "SELECT name FROM tags INNER JOIN posts_tags ON tag_id = tags.id INNER JOIN posts ON post_id = posts.id WHERE post_id = $id";
-	    $query = DB::query($sql);
+	    $query = DB::query('getTagsForPost', ['id' => intval($post['id'])]);
 	    $rows = $query->fetchAll(\PDO::FETCH_NUM);
 	    $list = array_map(function($i) { return $i[0]; }, $rows);
 	    $list[] = 'rating:'.$post['rating'];

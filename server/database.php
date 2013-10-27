@@ -5,6 +5,13 @@ use \Symfony\Component\Yaml\Yaml as SfYaml;
 // Class that handles database stuff.
 class DB
 {
+	// List of named queries, implemented as prepared statements.
+	private static $queries = [
+		'getPostById' => 'SELECT * FROM posts WHERE id = :id',
+		'getTagsForPost' => 'SELECT name FROM tags INNER JOIN posts_tags ON tag_id = tags.id INNER JOIN posts ON post_id = posts.id WHERE post_id = :id',
+		'getBlacklistForUser' => 'SELECT tags FROM user_blacklisted_tags WHERE user_id = :id'
+	];
+
 	// Get required credentials and connect to the local database.
 	// The PDO object will be cached as a global variable for extra optimization.
 	// Kinda sad that we can't serialize the PDO object for moar caching goodness.
@@ -21,10 +28,20 @@ class DB
 	    return $GLOBALS['pdo_bear'] = $pdo_bear;
 	}
 
-	// Simplify making a query.
-	static function query($sql)
+	// Simplify making a (parameterized) query.
+	static function query($sql, $params = [])
 	{
 		$pdo = self::connect();
-		return $pdo->query($sql);
+
+		if (isset(self::$queries[$sql]))
+		{
+			$statement = $pdo->prepare(self::$queries[$sql]);
+			$statement->execute($params);
+			return $statement;
+		}
+		else
+		{
+			return $pdo->query($sql);
+		}
 	}
 }
