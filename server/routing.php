@@ -5,12 +5,9 @@
 // Class to contain routes and operate on them.
 class Routes
 {
-    // Array of all routes.
-    static $all = [];
+    // Array of GET routes.
+    static $get = [];
 
-    // Register a route.
-    static function register($name, $code)
-    {
-        self::$all[$name] = $code;
-    }
+    // Array of POST routes.
+    static $post = [];
 }
