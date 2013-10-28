@@ -11,4 +11,5 @@ using('blacklists');
 using('query');
 using('response');
 using('image');
+using('routing');
 using('logic');
