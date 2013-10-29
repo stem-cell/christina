@@ -56,3 +56,9 @@ function unPhar($path)
 {
     return preg_replace('~^phar://~', '', $path);
 }
+
+// Echo something with HTML entities and encoded with utf-8.
+function html($text)
+{
+    echo htmlentities($text, ENT_QUOTES, 'utf-8');
+}
