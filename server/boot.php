@@ -13,4 +13,5 @@ using('response');
 using('image');
 using('routing');
 using('routes');
+using('template');
 using('logic');
