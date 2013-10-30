@@ -10,4 +10,52 @@ class Routes
 
     // Array of POST routes.
     static $post = [];
+
+    // Regular expression that represents a valid route.
+    // It includes named subpatterns for 'name' and 'params' of the route.
+    static $pattern = '~^/(?<name>[a-z_]+[a-z0-9_-]*)(/(?<params>.*))?$~i';
+
+    // Checks if the current route is valid.
+    static function isValid()
+    {
+        $valid = preg_match(self::$pattern, Query::raw(), $route);
+        if (!$valid) return false;
+        $routes = self::for(Query::method());
+        return isset($routes[$route['name']]);
+    }
+
+    // Lists all the routes for the given http method.
+    static function for($method)
+    {
+        switch (strtolower($method))
+        {
+            case 'get': return self::$get;
+            case 'post': return self::$post;
+            default: die;
+        }
+    }
+
+    // Gets the current route, and returns a map of its 'name' (string),
+    // 'method' (string), 'code' (function) and 'params' (string).
+    // Be sure to check if isValid() first.
+    static function get()
+    {
+        preg_match(self::$pattern, Query::raw(), $route);
+        $routes = self::for(Query::method());
+
+        return
+        [
+            'name' => $route['name'],
+            'method' => Query::method(),
+            'code' => $routes[$route['name']],
+            'params' => isset($route['params']) ? $route['params'] : ''
+        ];
+    }
+
+    // Calls the current route with its params.
+    static function call()
+    {
+        $route = self::get();
+        $route['code']($route['params']);
+    }
 }

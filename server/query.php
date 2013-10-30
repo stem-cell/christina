@@ -14,4 +14,16 @@ class Query
     {
         return isset($_GET['format']) and $_GET['format'] == 'json';
     }
+
+    // Gets the raw decoded query string sent by the user agent.
+    static function raw()
+    {
+        return rawurldecode($_SERVER['QUERY_STRING']);
+    }
+
+    // Gets the HTTP method used, e.g., "get" or "post".
+    static function method()
+    {
+        return strtolower($_SERVER['REQUEST_METHOD']);
+    }
 }
