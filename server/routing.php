@@ -20,12 +20,12 @@ class Routes
     {
         $valid = preg_match(self::$pattern, Query::raw(), $route);
         if (!$valid) return false;
-        $routes = self::for(Query::method());
+        $routes = self::forMethod(Query::method());
         return isset($routes[$route['name']]);
     }
 
     // Lists all the routes for the given http method.
-    static function for($method)
+    static function forMethod($method)
     {
         switch (strtolower($method))
         {
@@ -41,7 +41,7 @@ class Routes
     static function get()
     {
         preg_match(self::$pattern, Query::raw(), $route);
-        $routes = self::for(Query::method());
+        $routes = self::forMethod(Query::method());
 
         return
         [
