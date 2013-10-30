@@ -13,7 +13,7 @@ class Routes
 
     // Regular expression that represents a valid route.
     // It includes named subpatterns for 'name' and 'params' of the route.
-    static $pattern = '~^/(?<name>[a-z_]+[a-z0-9_-]*)(/(?<params>.*))?$~i';
+    static $pattern = '~^/?(?<name>[a-z_]+[a-z0-9_-]*)(/(?<params>.*))?$~i';
 
     // Checks if the current route is valid.
     static function isValid()
