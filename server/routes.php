@@ -12,7 +12,7 @@ Routes::$get['post'] = function($params)
 // Shows a list of feature support information.
 Routes::$get['features'] = function($params)
 {
-
+    Template::display('features');
 };
 
 // Shows PHP info.

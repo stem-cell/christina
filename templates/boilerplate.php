@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php namespace Christina; ?><!DOCTYPE html>
 <html lang="en-us">
 
 <head>
