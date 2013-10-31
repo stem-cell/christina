@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<?php echo $contents; ?>
+<?= $contents ?>
 </body>
 
 </html>
