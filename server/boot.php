@@ -15,4 +15,5 @@ using('image');
 using('routing');
 using('routes');
 using('template');
+using('minifier');
 using('logic');
