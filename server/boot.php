@@ -4,6 +4,7 @@ require __DIR__.'/utils.php';
 
 using('constants');
 using('features');
+using('hacks');
 using('yaml');
 using('cache');
 using('database');
