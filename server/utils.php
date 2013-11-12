@@ -62,3 +62,11 @@ function html($text)
 {
     echo htmlentities($text, ENT_QUOTES, 'utf-8');
 }
+
+function str_replace_first($search, $replace, $subject) {
+    $pos = strpos($subject, $search);
+    if ($pos !== false) {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+    return $subject;
+}

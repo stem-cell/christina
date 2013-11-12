@@ -27,8 +27,21 @@ class Minify
               )           # End alternation group.
             )             # If we made it here, we are not in a blacklist tag.
             %Six';
-        $result = preg_replace($re, " ", $html);
-        if ($result === null) return $html; // Couldn't handle it.
-        return $result;
+        $basic = preg_replace($re, " ", $html);
+
+        if ($basic === null) return $html; // Couldn't handle it.
+
+        $parts = preg_split('~</?body~i', $basic);
+
+        if (sizeof($parts) !== 3)
+        {
+            return $basic;
+        }
+
+        $head = trim(str_replace('> <', '><', $parts[0]));
+        $body = '<body'.rtrim(str_replace_first('> <', '><', $parts[1])).'</body';
+        $tail = rtrim(str_replace('> <', '><', $parts[2]));
+
+        return $head.$body.$tail;
     }
 }
