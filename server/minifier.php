@@ -44,4 +44,33 @@ class Minify
 
         return $head.$body.$tail;
     }
+
+    // PHP minifier. Why? Well, as Cave Johnson once said,
+    // science isn't about *why* - it's about *why not*.
+    static function php($code)
+    {
+        $result = '';
+
+        foreach (token_get_all($code) as $token)
+        {
+            if (is_string($token))
+            {
+                $result .= $token;
+            }
+            else
+            {
+                switch ($token[0])
+                {
+                    case T_COMMENT:
+                    case T_DOC_COMMENT:
+                        break;
+                    case T_WHITESPACE:
+                        $result .= ' ';
+                        break;
+                    default:
+                        $result .= $token[1];
+                }
+            }
+        }
+    }
 }
