@@ -1,5 +1,7 @@
 <?php namespace Christina;
 
+require_once __DIR__.'/server/minifier.php';
+
 // Configuration.
 $rootFiles = ''; // Regular expression.
 $rootFolders = 'server|images|templates'; // Regular expression.
@@ -39,14 +41,23 @@ foreach ($iterator as $filename => $file)
     $valid = "~^($rootFiles|($rootFolders)/.*)\$~";
     if (!preg_match($valid, $relative)) continue;
 
-    $phar->addFile($filename, $relative);
+    //$phar->addFile($filename, $relative);
+    $content = file_get_contents($filename);
+
+    if (substr($filename, -4) == '.php')
+    {
+        $content = Minify::php($content);
+    }
+    
+    $phar->addFromString($relative, $content);
+    
     $phar[$relative]->compress(\Phar::GZ); // We are gzipping the files.
     echo '.';
 }
 
 echo "\n";
 
-$phar->setStub(file_get_contents($stub));
+$phar->setStub(Minify::php(file_get_contents($stub)));
 
 // Make executable on Unix.
 chmod($pharFile, $permissions);

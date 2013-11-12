@@ -72,5 +72,7 @@ class Minify
                 }
             }
         }
+
+        return $result;
     }
 }
