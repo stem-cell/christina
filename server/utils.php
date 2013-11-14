@@ -15,10 +15,10 @@ function using($name)
     }
 }
 
-// Loads a library from the lib folder. Pass it a string like 'symphony/yaml'.
+// Loads a library from the lib folder. Pass it a string like 'symfony/yaml'.
 function lib($path)
 {
-    require_once dirname(__DIR__)."/lib/$name.php";
+    require_once dirname(__DIR__)."/libs/$path.php";
 }
 
 // Normalizes a path, handling .. references that go beyond the initial folder reference.
