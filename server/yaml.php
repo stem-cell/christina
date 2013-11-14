@@ -1,9 +1,8 @@
 <?php namespace Christina;
 
-// Again, just like with jQuery, we're taking advantage of the fact that,
-// conveniently, MyImoutoBooru is already using tools we'd like to use anyway.
-using('../vendor/Symfony/Component/Yaml/Yaml.php');
-using('../vendor/Symfony/Component/Yaml/Parser.php');
-using('../vendor/Symfony/Component/Yaml/Inline.php');
+// We really shouldn't trust SfYaml to be present in a specific folder on
+// the server-side, since as we saw with the latest update, that's pretty
+// fragile. So, now we're including it here.
+lib('symfony/yaml');
 using('../config/default_config.php');
 using('../config/config.php');
