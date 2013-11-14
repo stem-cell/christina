@@ -4,9 +4,10 @@ require_once __DIR__.'/server/minifier.php';
 
 // Configuration.
 $rootFiles = ''; // Regular expression.
-$rootFolders = 'server|images|templates'; // Regular expression.
-$pharFile = __DIR__.'/release/christina.phar';
-$stub = __DIR__.'/phar-stub.php';
+$rootFolders = 'server|images|templates|libs'; // Regular expression.
+$pharFile = __DIR__.'/release/christina.phar'; // Output file.
+$stub = __DIR__.'/phar-stub.php'; // Phar stub.
+$debug = true; // On debug mode, files are not minified.
 
 if (!\Phar::canWrite())
 {
@@ -44,7 +45,7 @@ foreach ($iterator as $filename => $file)
     //$phar->addFile($filename, $relative);
     $content = file_get_contents($filename);
 
-    if (substr($filename, -4) == '.php')
+    if (substr($filename, -4) == '.php' and !$debug)
     {
         $content = Minify::php($content);
     }
