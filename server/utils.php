@@ -15,6 +15,12 @@ function using($name)
     }
 }
 
+// Loads a library from the lib folder. Pass it a string like 'symphony/yaml'.
+function lib($path)
+{
+    require_once dirname(__DIR__)."/lib/$name.php";
+}
+
 // Normalizes a path, handling .. references that go beyond the initial folder reference.
 // Taken from here: http://www.php.net/manual/en/function.realpath.php#112367
 function normalizePath($path)
