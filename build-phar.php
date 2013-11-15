@@ -8,7 +8,7 @@ $rootFolders = 'server|images|templates|libs'; // Regular expression.
 $pharFile = __DIR__.'/release/christina.phar'; // Output file.
 $stub = __DIR__.'/phar-stub.php'; // Phar stub.
 $debug = false; // On debug mode, files are not minified.
-$compression = 'none'; // You can choose 'gzip', 'bzip2', or 'none'.
+$compression = 'gzip'; // You can choose 'gzip', 'bzip2', or 'none'.
 
 if (!\Phar::canWrite())
 {

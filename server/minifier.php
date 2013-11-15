@@ -50,10 +50,15 @@ class Minify
     static function php($code)
     {
         $result = '';
+        $skip = false;
 
         foreach (token_get_all($code) as $token)
         {
-            if (is_string($token))
+            if ($skip)
+            {
+                $skip = false;
+            }
+            else if (is_string($token))
             {
                 $result .= $token;
             }
@@ -63,6 +68,10 @@ class Minify
                 {
                     case T_COMMENT:
                     case T_DOC_COMMENT:
+                        break;
+                    case T_END_HEREDOC:
+                        $result .= $token[1].";\n";
+                        $skip = true;
                         break;
                     case T_WHITESPACE:
                         $result .= ' ';
