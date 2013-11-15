@@ -7,7 +7,8 @@ $rootFiles = ''; // Regular expression.
 $rootFolders = 'server|images|templates|libs'; // Regular expression.
 $pharFile = __DIR__.'/release/christina.phar'; // Output file.
 $stub = __DIR__.'/phar-stub.php'; // Phar stub.
-$debug = true; // On debug mode, files are not minified.
+$debug = false; // On debug mode, files are not minified.
+$compression = 'none'; // You can choose 'gzip', 'bzip2', or 'none'.
 
 if (!\Phar::canWrite())
 {
@@ -52,7 +53,13 @@ foreach ($iterator as $filename => $file)
     
     $phar->addFromString($relative, $content);
     
-    $phar[$relative]->compress(\Phar::GZ); // We are gzipping the files.
+    $modes = array('gzip' =>\Phar::GZ, 'bzip2' => \Phar::BZ2);
+
+    if (isset($modes[$compression]))
+    {
+        $phar[$relative]->compress($modes[$compression]);
+    }
+    
     echo '.';
 }
 
