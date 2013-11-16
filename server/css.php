@@ -14,4 +14,17 @@ class CSS
     {
         return dirname(__DIR__)."/css/$name.css";
     }
+
+    // Gets an URL for a CSS file (based on current christina.phar location).
+    static function url($name)
+    {
+        return $_SERVER['SCRIPT_NAME']."?css/$name.css";
+    }
+
+    // Echoes an HTML link to the given CSS file by name (for use in templates).
+    static function link($name)
+    {
+        $url = self::url($name);
+        echo "<link rel=\"stylesheet\" href=\"$url\" />";
+    }
 }
