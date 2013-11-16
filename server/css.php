@@ -18,7 +18,8 @@ class CSS
     // Gets an URL for a CSS file (based on current christina.phar location).
     static function url($name)
     {
-        return $_SERVER['SCRIPT_NAME']."?css/$name.css";
+        $crc32 = hash_file('crc32b', CSS::location($name));
+        return $_SERVER['SCRIPT_NAME']."?css/$name-$crc32.css";
     }
 
     // Echoes an HTML link to the given CSS file by name (for use in templates).
