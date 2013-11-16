@@ -17,4 +17,5 @@ using('routing');
 using('routes');
 using('template');
 using('minifier');
+using('css');
 using('logic');

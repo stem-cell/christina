@@ -20,3 +20,10 @@ Routes::$get['phpinfo'] = function($params)
 {
 
 };
+
+// Serves a CSS file.
+Routes::$get['css'] = function($params)
+{
+    header('content-type: text/css; charset=utf-8');
+    echo CSS::contents($params);
+};
