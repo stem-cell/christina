@@ -18,4 +18,5 @@ using('routes');
 using('template');
 using('minifier');
 using('css');
+using('parameters');
 using('logic');

@@ -25,5 +25,5 @@ Routes::$get['phpinfo'] = function($params)
 Routes::$get['css'] = function($params)
 {
     header('content-type: text/css; charset=utf-8');
-    echo CSS::contents($params);
+    echo CSS::contents($params['name']);
 };

@@ -82,10 +82,11 @@ class Routes
         {
             if (isset(self::$param[$variant]))
             {
-                return self::$param[$variant]($route['params']);
+                $closure = self::$param[$variant];
+                return $closure($route['params']);
             }
         }
-        
+
         return $route['params'];
     }
 }
