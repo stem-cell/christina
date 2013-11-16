@@ -11,6 +11,14 @@ class Routes
     // Array of POST routes.
     static $post = [];
 
+    // Stores parameter handlers. They should either be a route
+    // name (like 'features') or a lowercase HTTP method and a
+    // route name separated by a pipe (as in 'get|features').
+    // These will be called with the parameter string and should
+    // either return a parsed, sanitized representation of the
+    // parameter string from the query or raise an exception.
+    static $param = [];
+
     // Regular expression that represents a valid route.
     // It includes named subpatterns for 'name' and 'params' of the route.
     static $pattern = '~^/?(?<name>[a-z_]+[a-z0-9_-]*)(/(?<params>.*))?$~i';
@@ -56,6 +64,28 @@ class Routes
     static function call()
     {
         $route = self::get();
-        $route['code']($route['params']);
+        // This next line now might throw an exception. TODO: handle it.
+        $params = self::parseParameters($route);
+        $route['code']($params);
+    }
+
+    // If a parameter handler is defined for a route or method|route,
+    // this will invoke it to parse the parameter data and return the
+    // result, bubbling any exceptions thrown.
+    // In case no handler is defined, it will return the params as-is.
+    static function parseParameters($route)
+    {
+        $method = $route['method'];
+        $name = $route['name'];
+
+        foreach (["$method|$name", $name] as $variant)
+        {
+            if (isset(self::$param[$variant]))
+            {
+                return self::$param[$variant]($route['params']);
+            }
+        }
+        
+        return $route['params'];
     }
 }
