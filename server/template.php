@@ -1,6 +1,6 @@
 <?php namespace Christina;
 
-// Groups template-related functionality
+// Groups template-related functionality.
 class Template
 {
     // Renders a template with the given variables, and
