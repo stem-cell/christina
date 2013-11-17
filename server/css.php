@@ -25,10 +25,15 @@ class CSS
     }
 
     // Echoes an HTML link to the given CSS file by name (for use in templates).
-    static function link($name)
+    // If $target is an not a valid name, it will be used as-is (e.g., an URL).
+    static function link($target)
     {
-        $url = CSS::url($name);
-        echo "<link rel=\"stylesheet\" href=\"$url\">";
+        if (preg_match('/^[a-zA-Z0-9_]+$/', $target))
+        {
+            $target = CSS::url($target);
+        }
+        
+        echo "<link rel=\"stylesheet\" href=\"$target\">";
     }
 
     static function crc32($name)
