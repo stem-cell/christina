@@ -7,7 +7,7 @@
     <?php if (isset($css)) foreach ($css as $name) CSS::link($name); ?>
 </head>
 
-<body>
+<body class="christina">
 <?= $contents ?>
 </body>
 

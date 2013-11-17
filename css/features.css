@@ -1,9 +1,9 @@
-body {
+.christina {
   background: #eeeeee;
 }
-.tina-title {
+.christina h1 {
   font: 300 normal 53px Ubuntu, sans-serif;
 }
-.tina-title > b {
+.christina h1 > b {
   font: 700 normal 53px Ubuntu, sans-serif;
 }
