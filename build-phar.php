@@ -17,7 +17,8 @@ if (!\Phar::canWrite())
     exit;
 }
 
-echo "Creating Phar archive...\n";
+// Files added will be represented by dots appended to this, thus the lack of newline.
+echo 'Creating Phar archive';
 
 // Check if there's any Phar already present. If there is, we will copy its file
 // permissions to the one we generate instead of setting our default "-rwxr-xr-x".
@@ -32,9 +33,6 @@ $phar = new \Phar($pharFile);
 // Recursively iterate iterating on the recursive iteration iterator iteratively. 
 $dir = new \RecursiveDirectoryIterator(__DIR__, \RecursiveDirectoryIterator::SKIP_DOTS);
 $iterator = new \RecursiveIteratorIterator($dir);
-
-// Files added will be represented by dots appended to this, thus the lack of newline.
-echo 'Adding files';
 
 foreach ($iterator as $filename => $file)
 {
@@ -63,7 +61,7 @@ foreach ($iterator as $filename => $file)
     echo '.';
 }
 
-echo "\n";
+echo ' ';
 
 $phar->setStub(Minify::php(file_get_contents($stub)));
 
