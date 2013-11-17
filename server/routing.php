@@ -26,9 +26,9 @@ class Routes
     // Checks if the current route is valid.
     static function isValid()
     {
-        $valid = preg_match(self::$pattern, Query::raw(), $route);
+        $valid = preg_match(Routes::$pattern, Query::raw(), $route);
         if (!$valid) return false;
-        $routes = self::forMethod(Query::method());
+        $routes = Routes::forMethod(Query::method());
         return isset($routes[$route['name']]);
     }
 
@@ -37,8 +37,8 @@ class Routes
     {
         switch (strtolower($method))
         {
-            case 'get': return self::$get;
-            case 'post': return self::$post;
+            case 'get': return Routes::$get;
+            case 'post': return Routes::$post;
             default: die;
         }
     }
@@ -48,8 +48,8 @@ class Routes
     // Be sure to check if isValid() first.
     static function get()
     {
-        preg_match(self::$pattern, Query::raw(), $route);
-        $routes = self::forMethod(Query::method());
+        preg_match(Routes::$pattern, Query::raw(), $route);
+        $routes = Routes::forMethod(Query::method());
 
         return
         [
@@ -63,9 +63,9 @@ class Routes
     // Calls the current route with its params.
     static function call()
     {
-        $route = self::get();
+        $route = Routes::get();
         // This next line now might throw an exception. TODO: handle it.
-        $params = self::parseParameters($route);
+        $params = Routes::parseParameters($route);
         $route['code']($params);
     }
 
@@ -80,9 +80,9 @@ class Routes
 
         foreach (["$method|$name", $name] as $variant)
         {
-            if (isset(self::$param[$variant]))
+            if (isset(Routes::$param[$variant]))
             {
-                $closure = self::$param[$variant];
+                $closure = Routes::$param[$variant];
                 return $closure($route['params']);
             }
         }

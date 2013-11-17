@@ -31,12 +31,12 @@ class DB
     // Simplify making a (parameterized) query.
     static function query($sql, $params = [])
     {
-        $pdo = self::connect();
+        $pdo = DB::connect();
 
-        if (isset(self::$queries[$sql]))
+        if (isset(DB::$queries[$sql]))
         {
             is_array($params) or $params = [$params];
-            $statement = $pdo->prepare(self::$queries[$sql]);
+            $statement = $pdo->prepare(DB::$queries[$sql]);
             $statement->execute($params);
             return $statement;
         }
@@ -51,7 +51,7 @@ class DB
     // results directly (instead of a query object).
     static function rows($sql, $params = [])
     {
-        $query = self::query($sql, $params);
+        $query = DB::query($sql, $params);
         return $query->fetchAll(\PDO::FETCH_NUM);
     }
 
@@ -60,7 +60,7 @@ class DB
     // result directly (instead of a query object).
     static function object($sql, $params = [])
     {
-        $query = self::query($sql, $params);
+        $query = DB::query($sql, $params);
         return $query->fetchObject();
     }
 }

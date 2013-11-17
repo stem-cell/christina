@@ -13,9 +13,9 @@ class Template
         return ob_get_clean();
     }
 
-    // Minify and display rendered results. Wraps self::render().
+    // Minify and display rendered results. Wraps Template::render().
     static function display($name, $vars = [])
     {
-        echo Minify::html(self::render($name, $vars));
+        echo Minify::html(Template::render($name, $vars));
     }
 }
