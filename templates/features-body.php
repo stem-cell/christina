@@ -8,7 +8,7 @@ $features = [
 ];
 
 ?>
-<h1>Feature Support</h1>
+<h1 class="tina-title"><b>Christina</b> Feature Support</h1>
 <ul>
 <?php foreach ($features as $name => $support): ?>
     <li><?= $name ?>: <b><?php if(!$support) echo 'not '; ?>supported</b></li>
