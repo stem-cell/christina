@@ -1,9 +1,9 @@
 .christina {
+  font: 16px Ubuntu, sans-serif;
+}
+.christina {
   background: #eeeeee;
 }
 .christina h1 {
   font: 300 normal 53px Ubuntu, sans-serif;
-}
-.christina h1 > b {
-  font: 700 normal 53px Ubuntu, sans-serif;
 }
