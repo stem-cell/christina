@@ -20,4 +20,16 @@ class Features
     {
         return class_exists('Memcached');
     }
+
+    // Gets an array of the availability of all server-side features by name.
+    static function serverSide()
+    {
+        return
+        [
+            'APC' => Features::apc(),
+            'Memcache' => Features::memcache(),
+            'Memcached' => Features::memcached(),
+            'Ranting about PHP' => defined('T_PAAMAYIM_NEKUDOTAYIM')
+        ];
+    }
 }

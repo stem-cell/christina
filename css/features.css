@@ -4,10 +4,14 @@
 .christina {
   background: #444444;
   color: #eeeeee;
+  text-align: center;
 }
 .christina h1 {
   font: 300 normal 53px Ubuntu, sans-serif;
 }
 .christina h1 > b {
   color: #cccccc;
+}
+.christina h2 {
+  font: 300 normal 32px Ubuntu, sans-serif;
 }

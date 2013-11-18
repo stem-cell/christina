@@ -4,7 +4,7 @@
 class CSS
 {
     // Link to the CSS for the webfonts we are currently using.
-    const fonts = 'http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic';
+    const fonts = '//fonts.googleapis.com/css?family=Ubuntu:300,400,700,300italic,400italic';
 
     // Gets a CSS file's contents as a string.
     static function contents($name, $min = true)

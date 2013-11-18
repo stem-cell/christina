@@ -1,16 +1,10 @@
-<?php namespace Christina;
-
-$features = [
-    'APC' => Features::apc(),
-    'Memcache' => Features::memcache(),
-    'Memcached' => Features::memcached(),
-    'Ranting about PHP' => defined('T_PAAMAYIM_NEKUDOTAYIM')
-];
-
-?>
+<?php namespace Christina; ?>
 <h1><b>Christina</b> Feature Support</h1>
-<ul>
-<?php foreach ($features as $name => $support): ?>
-    <li><?= $name ?>: <b><?php if(!$support) echo 'not '; ?>supported</b></li>
-<?php endforeach; ?>
-</ul>
+<div class="wrap">
+    <h2>Server-Side Features</h2>
+    <ul>
+    <?php foreach (Features::serverSide() as $name => $support): ?>
+        <li><?= $name ?>: <b><?php if(!$support) echo 'not '; ?>supported</b></li>
+    <?php endforeach; ?>
+    </ul>
+</div>
