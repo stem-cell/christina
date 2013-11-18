@@ -26,7 +26,7 @@ class Features
     {
         return
         [
-            'APC' => Features::apc(),
+            'Alternative PHP Cache' => Features::apc(),
             'Memcache' => Features::memcache(),
             'Memcached' => Features::memcached(),
             'Ranting about PHP' => defined('T_PAAMAYIM_NEKUDOTAYIM')

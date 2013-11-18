@@ -4,7 +4,7 @@
     <h2>Server-Side Features</h2>
     <ul>
     <?php foreach (Features::serverSide() as $name => $support): ?>
-        <li><?= $name ?>: <b><?php if(!$support) echo 'not '; ?>supported</b></li>
+        <?= Template::render('features-list-item', compact('name', 'support')); ?>
     <?php endforeach; ?>
     </ul>
 </div>
