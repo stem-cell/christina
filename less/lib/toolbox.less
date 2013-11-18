@@ -273,3 +273,28 @@
 	       -o-user-select:    text;
 	          user-select:    text;
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//                             Additions                                //
+//////////////////////////////////////////////////////////////////////////
+
+
+
+// Smart centering.
+
+.center-h (@width) {
+    .relative;
+    width: @width;
+    left: 50%;
+    margin-left: 0px - @width / 2 ;
+}
+
+.center-v (@height) {
+    .relative;
+    height: @height;
+    top: 50%;
+    margin-top: 0px - @width / 2 ;
+}
+

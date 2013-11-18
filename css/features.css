@@ -15,3 +15,9 @@
 .christina h2 {
   font: 300 normal 32px Ubuntu, sans-serif;
 }
+.christina .wrap {
+  position: relative;
+  width: 600px;
+  left: 50%;
+  margin-left: -300px;
+}
