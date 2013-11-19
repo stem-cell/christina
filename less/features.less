@@ -3,9 +3,10 @@
 @import "lib/common";
 
 .christina {
-    background: @mainBkg;
     color: @mainColor;
+    .bkg(@mainBkg);
     .text-center;
+    .pad(0 0 48px 0);
     h1 {
         .title-light;
         > b {
@@ -20,18 +21,18 @@
     }
     ul {
         list-style-type: none;
-        padding: 0;
+        .pad0;
         .center-h(400px);
         .bigtext;
     }
     li {
         margin-bottom: 8px;
-        background: @lightBkg;
-        padding: 0 0 2px 6px;
+        .bkg(@lightBkg);
+        .pad(0 0 2px 6px);
         .text-left;
         .relative;
         b {
-            background: @lighterBkg;
+            .bkg(@lighterBkg);
             .text-center;
             .absolute;
             .block;
@@ -39,9 +40,27 @@
         }
     }
     .supported {
-        background: @greenBkg;
+        .bkg(@greenBkg);
         b {
-            background: @lightGreenBkg;
+            .bkg(@lightGreenBkg);
+        }
+    }
+    footer {
+        .dock-bottom();
+        .fixed;
+        .bkg(@lightBkg);
+        .pad(12px 0 14px 0);
+    }
+    a {
+        color: @mainColor;
+        .bkg(@blueBkg);
+        .no-underline;
+        .pad(0 6px 3px 6px);
+        &:hover, &:focus {
+            .bkg(@lightBlueBkg);
+        }
+        &:active {
+            .bkg(@blueBkg);
         }
     }
 }

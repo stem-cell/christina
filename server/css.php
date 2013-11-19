@@ -24,7 +24,7 @@ class CSS
     {
         $crc32 = CSS::crc32($name);
         $ext = $min ? 'min.css' : 'css';
-        return $_SERVER['SCRIPT_NAME']."?css/$name-$crc32.$ext";
+        return Routes::url("css/$name-$crc32.$ext");
     }
 
     // Echoes an HTML link to the given CSS file by name (for use in templates).

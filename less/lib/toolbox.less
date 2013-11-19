@@ -64,6 +64,7 @@
 .not-bold   () { font-weight: normal; }
 
 .no-decoration () { text-decoration: none;         }
+.no-underline  () { text-decoration: none;         }
 .underline     () { text-decoration: underline;    }
 .overline      () { text-decoration: overline;     }
 .line-through  () { text-decoration: line-through; }
@@ -298,3 +299,7 @@
     margin-top: 0px - @width / 2 ;
 }
 
+// Padding for the lazy
+
+.pad(@amount) { padding: @amount; }
+.pad0() { .pad(0); }

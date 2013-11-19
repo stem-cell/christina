@@ -8,3 +8,4 @@
     <?php endforeach; ?>
     </ul>
 </div>
+<footer><a href="<?= Routes::url('phpinfo'); ?>">Check raw PHP Info</a></footer>
