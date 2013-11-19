@@ -21,7 +21,8 @@ class Session
     static function get($name)
     {
         Session::init();
-        return $_SESSION[$name];
+        if isset($_SESSION[$name]) return $_SESSION[$name];
+        else return null;
     }
 
     // Same as above, but for setting values.

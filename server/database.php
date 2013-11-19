@@ -8,6 +8,7 @@ class DB
     // List of named queries, implemented as prepared statements.
     private static $queries = [
         'postById' => 'SELECT * FROM posts WHERE id = ?',
+        'userById' => 'SELECT name, password_hash, level, email FROM users WHERE id = ?',
         'tagsForPost' => 'SELECT name FROM tags INNER JOIN posts_tags ON tag_id = tags.id INNER JOIN posts ON post_id = posts.id WHERE post_id = ?',
         'blacklistForUser' => 'SELECT tags FROM user_blacklisted_tags WHERE user_id = ?'
     ];
