@@ -46,15 +46,6 @@
 .christina a.button:active {
   background: #376094;
 }
-.christina {
-  padding: 0 0 48px 0;
-}
-.christina .wrap {
-  position: relative;
-  width: 600px;
-  left: 50%;
-  margin-left: -300px;
-}
 .christina ul {
   list-style-type: none;
   padding: 0;
@@ -66,24 +57,16 @@
 }
 .christina li {
   margin-bottom: 8px;
-  background: #666666;
   padding: 0 0 2px 6px;
-  text-align: left;
-  position: relative;
 }
-.christina li b {
-  background: #888888;
-  text-align: center;
-  position: absolute;
+.christina a.button {
   display: block;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 140px;
+  background: #666666;
 }
-.christina .supported {
-  background: #347a4b;
+.christina a.button:hover,
+.christina a.button:focus {
+  background: #888888;
 }
-.christina .supported b {
-  background: #419d5d;
+.christina a.button:active {
+  background: #666666;
 }

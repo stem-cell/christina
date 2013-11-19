@@ -8,4 +8,4 @@
     <?php endforeach; ?>
     </ul>
 </div>
-<footer><a href="<?= Routes::url('phpinfo'); ?>">Check raw PHP Info</a></footer>
+<footer><a class="button" href="<?= Routes::url('phpinfo'); ?>">Check raw PHP Info</a></footer>

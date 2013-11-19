@@ -1,0 +1,27 @@
+// Dashboard page stylesheet.
+
+@import "lib/common";
+@import "lib/pages";
+
+.christina {
+    ul {
+        list-style-type: none;
+        .pad0;
+        .center-h(400px);
+        .bigtext;
+    }
+    li {
+        margin-bottom: 8px;
+        .pad(0 0 2px 6px);
+    }
+    a.button {
+        .block;
+        .bkg(@lightBkg);
+        &:hover, &:focus {
+            .bkg(@lighterBkg);
+        }
+        &:active {
+            .bkg(@lightBkg);
+        }
+    }
+}

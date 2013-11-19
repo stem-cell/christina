@@ -22,4 +22,5 @@ using('template');
 using('minifier');
 using('css');
 using('parameters');
+using('dashboard');
 using('logic');

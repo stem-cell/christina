@@ -28,3 +28,9 @@ Routes::$get['css'] = function($params)
     if ($params['crc32']) Response::someThingsNeverChange();
     echo CSS::contents($params['name'], $params['min']);
 };
+
+// Shows the administrative dashboard.
+Routes::$get['dashboard'] = function($params)
+{
+    Template::display('dashboard');
+};

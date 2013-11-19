@@ -1,21 +1,10 @@
 // Features page stylesheet.
 
 @import "lib/common";
+@import "lib/pages";
 
 .christina {
-    color: @mainColor;
-    .bkg(@mainBkg);
-    .text-center;
     .pad(0 0 48px 0);
-    h1 {
-        .title-light;
-        > b {
-            color: @softColor;
-        }
-    }
-    h2 {
-        .small-title;
-    }
     .wrap {
         .center-h(600px);
     }
@@ -43,24 +32,6 @@
         .bkg(@greenBkg);
         b {
             .bkg(@lightGreenBkg);
-        }
-    }
-    footer {
-        .dock-bottom();
-        .fixed;
-        .bkg(@lightBkg);
-        .pad(12px 0 14px 0);
-    }
-    a {
-        color: @mainColor;
-        .bkg(@blueBkg);
-        .no-underline;
-        .pad(0 6px 3px 6px);
-        &:hover, &:focus {
-            .bkg(@lightBlueBkg);
-        }
-        &:active {
-            .bkg(@blueBkg);
         }
     }
 }

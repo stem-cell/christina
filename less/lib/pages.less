@@ -1,0 +1,34 @@
+// This will be applied to all standalone pages.
+
+.christina {
+    color: @mainColor;
+    .bkg(@mainBkg);
+    .text-center;
+    h1 {
+        .title-light;
+        > b {
+            color: @softColor;
+        }
+    }
+    h2 {
+        .small-title;
+    }
+    footer {
+        .dock-bottom();
+        .fixed;
+        .bkg(@lightBkg);
+        .pad(12px 0 14px 0);
+    }
+    a.button {
+        color: @mainColor;
+        .bkg(@blueBkg);
+        .no-underline;
+        .pad(0 6px 3px 6px);
+        &:hover, &:focus {
+            .bkg(@lightBlueBkg);
+        }
+        &:active {
+            .bkg(@blueBkg);
+        }
+    }
+}
