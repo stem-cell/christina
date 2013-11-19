@@ -18,7 +18,7 @@ Routes::$get['features'] = function($params)
 // Shows PHP info.
 Routes::$get['phpinfo'] = function($params)
 {
-
+    phpinfo();
 };
 
 // Serves a CSS file.
