@@ -63,4 +63,10 @@ class User
     {
         return User::prop('email', $id);
     }
+
+    // Gets the current user's ID. Of course, this takes no parameters.
+    static function id()
+    {
+        return Session::get('user_id');
+    }
 }

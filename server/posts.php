@@ -22,9 +22,10 @@ class Posts
     // Gets the URL for the resized image (or original if no resized image present)
     // of a post, and assumes a valid array map of the respective database row.
     // The returned URL will be an absolute URL (starting with slash), without host.
+    // If the post data is invalid, it will return a 404 image.
     static function imageUrl($post)
     {
-        if (!isset($post['md5'], $post['file_ext'])) throw new Exception();
+        if (!isset($post['md5'], $post['file_ext'])) return CHRISTINA_404;
 
         $md5 = $post['md5'];
         $ext = $post['file_ext'];
@@ -38,5 +39,65 @@ class Posts
 
         // Otherwise just serve the original.
         return "$base/image/$md5.$ext";
+    }
+
+    // Shows a post to the user.
+    static function show($id, $json = false)
+    {
+        $post = Posts::get($id);
+        $tags = Posts::getTags((array)$post);
+        $display = Posts::imageUrl((array)$post);
+        
+        if ($json)
+        {
+            Posts::showJson($id);
+        }
+        else
+        {
+            Posts::showImage($id);
+        }
+    }
+
+    // Shows a post image to the user.
+    static function showImage($id)
+    {
+        $post = Posts::get($id);
+        $tags = Posts::getTags((array)$post);
+        
+        if ($post)
+        {
+            if (Blacklists::check($tags))
+            {
+                Response::showBlacklistedImage();
+            }
+            else
+            {
+                header('Location: '.Posts::imageUrl((array)$post));
+                Response::someThingsNeverChange();
+            }
+        }
+        else
+        {
+            header('Location: /404');
+        }
+    }
+
+    // Shows a post's information as JSON to the user.
+    static function showJson($id)
+    {
+        $post = Posts::get($id);
+        $tags = Posts::getTags((array)$post);
+        
+        $response = [
+            'version' => CHRISTINA_VERSION,
+            'success' => !!$post,
+            'display' => Posts::imageUrl((array)$post),
+            'raw' => (array)$post,
+            'tags' => $tags
+        ];
+
+        $response['blacklisted'] = Blacklists::check($tags);
+        $json = json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
+        echo $json;
     }
 }

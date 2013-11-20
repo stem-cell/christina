@@ -6,7 +6,7 @@
 // Shows a post.
 Routes::$get['post'] = function($params)
 {
-
+    Posts::show($params['id'], $params['json']);
 };
 
 // Shows a list of feature support information.

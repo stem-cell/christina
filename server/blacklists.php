@@ -26,8 +26,16 @@ class Blacklists
     }
 
     // Given a list of tags and a blacklist, see if the post is blacklisted.
-    static function check($tags, $blacklist)
+    // If no blacklist is specified, use the current user's. If the user isn't
+    // logged in, use the default blacklist.
+    static function check($tags, $blacklist = null)
     {
+        if (!$blacklist)
+        {
+            $userId = User::id();
+            $blacklist = Blacklists::get($userId);
+        }
+
         foreach ($blacklist as $blacklisted)
         {
             foreach ($tags as $tag)
