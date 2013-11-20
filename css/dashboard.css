@@ -70,3 +70,7 @@
 .christina a.button:active {
   background: #666666;
 }
+.christina h2 > span {
+  color: #cccccc;
+  font-weight: 400;
+}

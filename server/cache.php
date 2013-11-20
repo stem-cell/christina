@@ -55,22 +55,13 @@ function cache($name, $fallback)
     else
     {
         // Better than no optimization at all.
-        static $sessionStarted = false;
-        session_name('christina-session');
-
-        if (!$sessionStarted)
+        if (Session::exists($name))
         {
-            session_start();
-            $sessionStarted = true;
-        }
-
-        if (isset($_SESSION[$name]))
-        {
-            return $_SESSION[$name];
+            return Session::get($name);
         }
         else
         {
-            return $_SESSION[$name] = $fallback();
+            return Session::set($name, $fallback());
         }
 
         return $fallback();

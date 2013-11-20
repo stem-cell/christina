@@ -62,6 +62,6 @@ class DB
     static function object($sql, $params = [])
     {
         $query = DB::query($sql, $params);
-        return $query->fetchObject();
+        return (array)$query->fetchObject();
     }
 }

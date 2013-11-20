@@ -11,7 +11,7 @@ class User
 
         if ($id)
         {
-            User::byId($id);
+            return User::byId($id);
         }
         else
         {
