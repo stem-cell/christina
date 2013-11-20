@@ -7,7 +7,7 @@ function using($name)
 {
     if (substr($name, 0, 3) == '../')
     {
-        require_once normalizePath(dirname(dirname(unPhar(__DIR__))).'/'.$name);
+        require_once Enivronment::resolve($name);
     }
     else
     {

@@ -1,5 +1,7 @@
 <?php namespace Christina;
 
+// Constants used throughout the application lifecycle.
+
 // Software version.
 define('CHRISTINA_VERSION', '0.1');
 

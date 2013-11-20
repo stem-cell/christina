@@ -1,7 +1,5 @@
 <?php namespace Christina;
 
-use \Symfony\Yaml\Yaml as SfYaml;
-
 // Class that handles database stuff.
 class DB
 {
@@ -20,7 +18,7 @@ class DB
     {
         $auth = cache('pdo_bear', function() {
             $configPath = Environment::resolve('../config/database.yml');
-            return SfYaml::parse($configPath)['production'];
+            return Yaml::parse($configPath)['production'];
         });
 
         if (isset($GLOBALS['pdo_bear'])) return $GLOBALS['pdo_bear'];

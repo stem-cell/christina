@@ -10,7 +10,7 @@ class Blacklists
         
         if ($id < 1)
         {
-            $blacklist = (new \Moebooru_Config())->default_blacklists;
+            $blacklist = Environment::config()->default_blacklists;
         }
         else
         {
