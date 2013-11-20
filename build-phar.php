@@ -1,10 +1,10 @@
 <?php namespace Christina;
 
-require_once __DIR__.'/server/minifier.php';
+require_once __DIR__.'/engine/minifier.php';
 
 // Configuration.
-$rootFiles = ''; // Regular expression.
-$rootFolders = 'server|images|templates|libs|css'; // Regular expression.
+$rootFiles = 'boot.php'; // Regular expression.
+$rootFolders = 'engine|images|templates|libs|css|routes|parsers'; // Regular expression.
 $pharFile = __DIR__.'/release/christina.phar'; // Output file.
 $stub = __DIR__.'/phar-stub.php'; // Phar stub.
 $debug = false; // On debug mode, files are not minified.
@@ -27,6 +27,9 @@ if (file_exists($pharFile))
 {
     $permissions = fileperms($pharFile) & 0777;
 }
+
+// We have to delete the currently-present phar, because otherwise old files remain.
+if (file_exists($pharFile)) unlink ($pharFile);
 
 $phar = new \Phar($pharFile);
 

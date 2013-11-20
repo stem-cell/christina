@@ -69,10 +69,34 @@ function html($text)
     echo htmlentities($text, ENT_QUOTES, 'utf-8');
 }
 
-function str_replace_first($search, $replace, $subject) {
+// Replaces the first instance of a pattern.
+// Taken from: http://stackoverflow.com/a/2606638/124119
+function str_replace_first($search, $replace, $subject)
+{
     $pos = strpos($subject, $search);
-    if ($pos !== false) {
+
+    if ($pos !== false)
+    {
         $subject = substr_replace($subject, $replace, $pos, strlen($search));
     }
+
     return $subject;
+}
+
+// Performs require_once over an entire directory.
+// Taken from: http://stackoverflow.com/a/2692394/124119
+function requireDir($path)
+{
+    $dir      = new \RecursiveDirectoryIterator($path);
+    $iterator = new \RecursiveIteratorIterator($dir);
+    
+    foreach ($iterator as $file)
+    {
+        $fname = $file->getFilename();
+
+        if (preg_match('/\.php$/i', $fname))
+        {
+            require_once $file->getPathname();
+        }
+    }
 }

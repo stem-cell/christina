@@ -5,6 +5,9 @@
 // Class to contain routes and operate on them.
 class Routes
 {
+    // A value indicating whether routing has been initialized.
+    static $initialized = false;
+
     // Array of GET routes.
     static $get = [];
 
@@ -26,6 +29,7 @@ class Routes
     // Checks if the current route is valid.
     static function isValid()
     {
+        Routes::init();
         $valid = preg_match(Routes::$pattern, Query::raw(), $route);
         if (!$valid) return false;
         $routes = Routes::forMethod(Query::method());
@@ -63,6 +67,7 @@ class Routes
     // Calls the current route with its params.
     static function call()
     {
+        Routes::init();
         $route = Routes::get();
         // This next line now might throw an exception. TODO: handle it.
         $params = Routes::parseParameters($route);
@@ -107,5 +112,17 @@ class Routes
     static function redirect($route)
     {
         header('Location: '.Routes::url($route));
+    }
+
+    // Initializes routing support.
+    static function init()
+    {
+        if (!Routes::$initialized)
+        {
+            $base = dirname(__DIR__);
+            requireDir("$base/routes");
+            requireDir("$base/parsers");
+            Routes::$initialized = true;
+        }
     }
 }
