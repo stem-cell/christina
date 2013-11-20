@@ -33,9 +33,17 @@ class Session
         $_SESSION[$name] = $value;
     }
 
+    // Same as above, but for unsetting values.
+    static function delete($name)
+    {
+        Session::init();
+        unset($_SESSION[$name]);
+    }
+
     // Check if value exists in session storage.
     static function exists($name)
     {
+        Session::init();
         return isset($_SESSION[$name]);
     }
 }

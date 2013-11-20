@@ -25,4 +25,5 @@ using('parameters');
 using('dashboard');
 using('session');
 using('user');
+using('environment');
 using('logic');

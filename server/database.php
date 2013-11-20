@@ -19,7 +19,8 @@ class DB
     static function connect()
     {
         $auth = cache('pdo_bear', function() {
-            return SfYaml::parse('../config/database.yml')['production'];
+            $configPath = Environment::resolve('../config/database.yml');
+            return SfYaml::parse($configPath)['production'];
         });
 
         if (isset($GLOBALS['pdo_bear'])) return $GLOBALS['pdo_bear'];

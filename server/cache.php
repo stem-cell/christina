@@ -61,9 +61,8 @@ function cache($name, $fallback)
         }
         else
         {
-            return Session::set($name, $fallback());
+            Session::set($name, $value = $fallback());
+            return $value;
         }
-
-        return $fallback();
     }
 }
