@@ -95,4 +95,17 @@ class Routes
     {
         return $_SERVER['SCRIPT_NAME']."/$route";
     }
+
+    // Handles route serving or redirection for an empty root path,
+    // that is, when the user navigated to 'christina.php' directly.
+    static function home()
+    {
+        Routes::redirect('dashboard');
+    }
+
+    // Redirects to a given route.
+    static function redirect($route)
+    {
+        header('Location: '.Routes::url($route));
+    }
 }

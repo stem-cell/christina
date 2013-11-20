@@ -12,6 +12,10 @@ class Logic
         {
             Routes::call();
         }
+        else if (Query::isEmpty())
+        {
+            Routes::home();
+        }
         else
         {
             Response::youProbablyDontKnowWhatYouAreDoing();

@@ -27,3 +27,5 @@ using('session');
 using('user');
 using('environment');
 using('logic');
+
+Logic::perform();

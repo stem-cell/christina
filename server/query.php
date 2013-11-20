@@ -20,4 +20,10 @@ class Query
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
+
+    // Checks whether the current query is empty.
+    static function isEmpty()
+    {
+        return Query::raw() == '';
+    }
 }
