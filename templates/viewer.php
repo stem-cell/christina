@@ -2,7 +2,7 @@
 
 $vars['title'] = 'Post Viewer - Christina';
 
-$vars['contents'] = Template::render('viewer-body', []);
+$vars['contents'] = Template::render('viewer-body', compact('id'));
 
 $vars['css'] = ['normalize', 'viewer', CSS::fonts];
 

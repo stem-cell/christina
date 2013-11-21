@@ -3,5 +3,5 @@
 // An interactive post viewer.
 Routes::$get['viewer'] = function($params)
 {
-    Template::display('viewer');
+    Template::display('viewer', $params);
 };

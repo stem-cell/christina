@@ -8,7 +8,8 @@ class DB
         'postById' => 'SELECT * FROM posts WHERE id = ?',
         'userById' => 'SELECT name, level, email FROM users WHERE id = ?',
         'tagsForPost' => 'SELECT name FROM tags INNER JOIN posts_tags ON tag_id = tags.id INNER JOIN posts ON post_id = posts.id WHERE post_id = ?',
-        'blacklistForUser' => 'SELECT tags FROM user_blacklisted_tags WHERE user_id = ?'
+        'blacklistForUser' => 'SELECT tags FROM user_blacklisted_tags WHERE user_id = ?',
+        'lastPostId' => 'SELECT id FROM posts ORDER BY id DESC LIMIT 0, 1'
     ];
 
     // Get required credentials and connect to the local database.

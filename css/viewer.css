@@ -113,3 +113,7 @@
 .christina .nav-button.right {
   right: 0;
 }
+.christina .nav-button.disabled {
+  pointer-events: none;
+  cursor: default;
+}

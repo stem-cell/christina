@@ -100,4 +100,10 @@ class Posts
         $json = json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
         echo $json;
     }
+
+    // Gets the last post ID (the latest post, most likely).
+    static function lastId()
+    {
+        return DB::object('lastPostId')['id'];
+    }
 }
