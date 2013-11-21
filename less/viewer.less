@@ -1,0 +1,17 @@
+// Post viewer page stylesheet.
+
+@import "lib/common";
+@import "lib/pages";
+
+.christina {
+    a.button {
+        .block;
+        .bkg(@lightBkg);
+        &:hover, &:focus {
+            .bkg(@lighterBkg);
+        }
+        &:active {
+            .bkg(@lightBkg);
+        }
+    }
+}
