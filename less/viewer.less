@@ -14,4 +14,48 @@
             .bkg(@lightBkg);
         }
     }
+    .viewer {
+        .absolute;
+        .sides(144px, 0, 46px, 0);
+    }
+    .iframe-wrap {
+        .absolute;
+        .sides(0, 48px);
+    }
+    iframe {
+        .absolute;
+        .block;
+        .top0;
+        .left0;
+        .full;
+    }
+    .nav-button {
+        opacity: 0.5;
+        color: @mainColor;
+        .absolute;
+        .block;
+        .size(100%, 48px);
+        .bkg(@lightBkg);
+        .no-underline;
+        .small-title;
+        span {
+            width: 48px;
+            .absolute;
+            .text-center;
+            .line(48px);
+            .center-v(48px);
+        }
+        &:hover, &:focus {
+            opacity: 1;
+        }
+        &:active {
+            opacity: 0.5;
+        }
+        &.left {
+            .left0;
+        }
+        &.right {
+            .right0;
+        }
+    }
 }

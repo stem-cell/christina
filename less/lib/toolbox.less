@@ -95,7 +95,7 @@
 
 // Short-hand sizing.
 
-.size (@width, @height) { width: @width; height: @height; }
+.size (@height, @width) { height: @height; width: @width; }
 .size (@size)           { .size(@size, @size);            }
 
 .half-w () { width:   50%; }
@@ -297,10 +297,14 @@
     .relative;
     height: @height;
     top: 50%;
-    margin-top: 0px - @width / 2 ;
+    margin-top: 0px - @height / 2 ;
 }
 
-// Padding for the lazy
+// Padding for the lazy.
 
 .pad(@amount) { padding: @amount; }
 .pad0() { .pad(0); }
+
+// Line height shorthand.
+
+.line (@size) { line-height: @size; }
