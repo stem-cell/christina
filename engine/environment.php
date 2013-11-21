@@ -17,4 +17,10 @@ class Environment
         using('../config/config.php');
         return new \Moebooru_Config();
     }
+
+    // Returns the signature used by the server.
+    static function signature()
+    {
+        return $_SERVER['SERVER_SIGNATURE'];
+    }
 }

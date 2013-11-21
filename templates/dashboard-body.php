@@ -8,3 +8,4 @@
     <?php endforeach; ?>
     </ul>
 </div>
+<footer><?= Environment::signature(); ?></footer>

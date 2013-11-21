@@ -26,12 +26,14 @@
   font: 300 normal 32px Ubuntu, sans-serif;
 }
 .christina footer {
+  height: 22px;
   right: 0;
   bottom: 0;
   left: 0;
   position: fixed;
   background: #666666;
   padding: 12px 0 14px 0;
+  line-height: 22px;
 }
 .christina a.button {
   color: #eeeeee;
@@ -61,7 +63,7 @@
   position: absolute;
   top: 144px;
   right: 0;
-  bottom: 46px;
+  bottom: 48px;
   left: 0;
 }
 .christina .iframe-wrap {
