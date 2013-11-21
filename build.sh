@@ -6,8 +6,8 @@ for less in less/*.less
 do
     file=${less##*/}
     name=${file%.*}
-    lessc "$less" "css/$name.css"
-    lessc --clean-css "$less" "css/$name.min.css"
+    lessc --no-color "$less" "css/$name.css"
+    lessc --no-color --clean-css "$less" "css/$name.min.css" 1> NUL 2> NUL
     echo -n .
 done
 echo " Done."
