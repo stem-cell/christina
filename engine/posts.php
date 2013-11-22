@@ -41,23 +41,6 @@ class Posts
         return "$base/image/$md5.$ext";
     }
 
-    // Shows a post to the user.
-    static function show($id, $json = false)
-    {
-        $post = Posts::get($id);
-        $tags = Posts::getTags((array)$post);
-        $display = Posts::imageUrl((array)$post);
-        
-        if ($json)
-        {
-            Posts::showJson($id);
-        }
-        else
-        {
-            Posts::showImage($id);
-        }
-    }
-
     // Shows a post image to the user.
     static function showImage($id)
     {
@@ -83,7 +66,7 @@ class Posts
     }
 
     // Shows a post's information as JSON to the user.
-    static function showJson($id)
+    static function showJson($id, $min = true)
     {
         $post = Posts::get($id);
         $tags = Posts::getTags((array)$post);
@@ -97,7 +80,9 @@ class Posts
         ];
 
         $response['blacklisted'] = Blacklists::check($tags);
-        $json = json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT);
+        $flags = JSON_NUMERIC_CHECK;
+        if (!$min) $flags |= JSON_PRETTY_PRINT;
+        $json = json_encode($response, $flags);
         echo $json;
     }
 

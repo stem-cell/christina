@@ -3,5 +3,12 @@
 // Shows a post.
 Routes::$get['post'] = function($params)
 {
-    Posts::show($params['id'], $params['json']);
+    if ($params['json'])
+    {
+        Posts::showJson($params['id'], $params['min']);
+    }
+    else
+    {
+        Posts::showImage($params['id']);
+    }
 };
