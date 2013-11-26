@@ -1,0 +1,58 @@
+// Features page stylesheet.
+
+@import "lib/common";
+@import "lib/pages";
+
+.christina {
+    .info {
+        .hide;
+        .absolute;
+        .above;
+        .fill;
+        .transition(all 1s @easeOutCubic);
+        &:hover {
+            .opaque;
+            .bkg(@mainBkg);
+        }
+        & > aside {
+            margin-top: 64px;
+            .absolute;
+            .auto-overflow;
+            .text-left;
+            .line(22px);
+        }
+        p {
+            .reset;
+        }
+    }
+    img {
+        .smart-center;
+    }
+    .hover {
+        margin: 12px 16px;
+        padding: 0 6px 3px 6px;
+        .absolute;
+        .above;
+        .bottom0;
+        .right0;
+        .bkg(fade(@mainBkg, 40%));
+    }
+    &:hover .hover {
+        .hidden;
+    }
+    .tags {
+        .rtl;
+        .dock-left(50%);
+        & > .content {
+            padding-left: 16px;
+            .ltr;
+        }
+    }
+    .metadata {
+        padding-right: 16px;
+        .dock-right(50%);
+    }
+    h2 {
+        margin: 14px 0;
+    }
+}

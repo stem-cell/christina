@@ -9,7 +9,8 @@ class Posts
         return DB::object('postById', $id);
     }
 
-    // Gets a (textual) list of tags for a post as an array. No tags are prefixed, except for rating:N.
+    // Gets a (textual) list of tags for a post as an array. No tags are prefixed,
+    // except for rating:N.
     static function getTags($post)
     {
         if (!is_array($post) or !isset($post['id'])) return array();
@@ -84,6 +85,14 @@ class Posts
         if (!$min) $flags |= JSON_PRETTY_PRINT;
         $json = json_encode($response, $flags);
         echo $json;
+    }
+
+    // Shows a post's information in an HTML page.
+    static function showHtml($id)
+    {
+        $post = Posts::get($id);
+        $tags = Posts::getTags((array)$post);
+        Template::display('post', ['postInfo' => compact('post', 'tags')]);
     }
 
     // Gets the last post ID (the latest post, most likely).

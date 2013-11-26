@@ -47,6 +47,17 @@
 .auto-y-overflow   () { overflow-y: auto;    }
 .scroll-y-overflow () { overflow-y: scroll;  }
 
+.hide-x () { overflow-x: hidden; }
+.hide-y () { overflow-y: hidden; }
+.hide-h () { overflow-x: hidden; }
+.hide-v () { overflow-y: hidden; }
+
+.scroll   () { overflow:   scroll; }
+.scroll-x () { overflow-x: scroll; }
+.scroll-y () { overflow-y: scroll; }
+.scroll-h () { overflow-x: scroll; }
+.scroll-v () { overflow-y: scroll; }
+
 .text-clip () { text-overflow: clip; }
 .ellipsis  () { text-overflow: ellipsis; }
 
@@ -193,10 +204,12 @@
 // Cross-browser CSS3 transitions.
 
 .transition (...) {
+    // As of writing, the only current browsers needing prefixes are android
+    // and blackberry browsers. Yay! http://caniuse.com/css-transitions
     -webkit-transition: @arguments;
-       -moz-transition: @arguments;
-        -ms-transition: @arguments;
-         -o-transition: @arguments;
+    // -moz-transition: @arguments;
+    //  -ms-transition: @arguments;
+    //   -o-transition: @arguments;
             transition: @arguments;
 }
 
@@ -312,3 +325,36 @@
 // Disables a link. http://caniuse.com/#feat=pointer-events
 
 .disable () { pointer-events: none; cursor: default; }
+
+// Why did I never knew how to do this before?
+
+.smart-center() {
+    vertical-align: bottom;
+    max-height: 100%;
+    max-width: 100%;
+    position:absolute;
+    margin:auto;
+    .fill;
+}
+
+// Opacity for the lazy.
+
+.hide        () { opacity: 0;    }
+.show        () { opacity: 1;    }
+.translucent () { opacity: 0.25; }
+.translucid  () { opacity: 0.25; }
+.semiopaque  () { opacity: 0.5;  }
+.semi-opaque () { opacity: 0.5;  }
+.opaque      () { opacity: 0.75; }
+
+// Text orientation.
+
+.rtl () { direction: rtl; }
+.ltr () { direction: ltr; }
+
+// Resets an element.
+
+.reset() {
+    margin: 0;
+    padding: 0;
+}

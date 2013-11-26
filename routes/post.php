@@ -7,6 +7,10 @@ Routes::$get['post'] = function($params)
     {
         Posts::showJson($params['id'], $params['min']);
     }
+    else if ($params['html'])
+    {
+        Posts::showHtml($params['id']);
+    }
     else
     {
         Posts::showImage($params['id']);
