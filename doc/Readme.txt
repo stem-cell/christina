@@ -1,0 +1,1 @@
+Currently I'm only using this directory to store files for the main readme.
