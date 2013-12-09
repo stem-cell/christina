@@ -1,10 +1,8 @@
 <?php namespace Christina;
 
-$id = $postInfo['post']['id'];
+$vars['title'] = "Post #{$post->id} - Christina";
 
-$vars['title'] = "Post #$id - Christina";
-
-$vars['contents'] = Template::render('post-body', $postInfo);
+$vars['contents'] = Template::render('post-body', compact('post'));
 
 $vars['css'] = ['normalize', 'post', CSS::fonts];
 

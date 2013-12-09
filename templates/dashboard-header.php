@@ -1,12 +1,12 @@
 <?php namespace Christina;
 
-if (!User::info())
+if (!Users::current())
 {
     $text = '(Not logged in)';
 }
 else
 {
-    $text = 'Logged in as <span>'.User::name().'</name>';
+    $text = 'Logged in as <span>'.Users::name().'</name>';
 }
 
 echo "<h2>$text</h2>";

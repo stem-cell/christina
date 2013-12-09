@@ -5,14 +5,19 @@
 // Isn't it nice when things are this clean?
 class Logic
 {
+    // Have we called initialization logic yet?
+    static $initialized = false;
+
     // Start Christina.
     static function perform()
     {
+        Logic::init();
+
         if (Routes::isValid())
         {
             Routes::call();
         }
-        else if (Query::isEmpty())
+        else if (Request::isEmpty())
         {
             Routes::home();
         }
@@ -20,5 +25,14 @@ class Logic
         {
             Response::youProbablyDontKnowWhatYouAreDoing();
         }
+    }
+
+    // Bootstrap anything that's necessary.
+    static function init()
+    {
+        if (Logic::$initialized) return;
+        else Logic::$initialized = true;
+        
+        Rules::init();
     }
 }

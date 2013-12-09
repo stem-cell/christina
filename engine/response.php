@@ -6,7 +6,7 @@ class Response
     static function showBlacklistedImage()
     {
         header('Content-Type: image/png');
-        echo Image::get('blacklisted');
+        echo Images::get('blacklisted');
         Response::someThingsNeverChange(); // like people's minds about blacklists.
     }
 

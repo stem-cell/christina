@@ -3,54 +3,61 @@
 // Abstract post access.
 class Posts
 {
-    // Get information about a post, by numerical ID.
+    // Get information about a post in a Post instance, by numerical ID.
     static function get($id)
     {
-        return DB::object('postById', $id);
+        $data = DB::object('postById', $id);
+        if ($data) $data['id'] = $id;
+        return $data ? new Post($data) : null;
     }
 
-    // Gets a (textual) list of tags for a post as an array. No tags are prefixed,
-    // except for rating:N.
-    static function getTags($post)
+    // Gets a list of tag objects for a post by id.
+    static function getTags($id)
     {
-        if (!is_array($post) or !isset($post['id'])) return array();
-        $rows = DB::rows('tagsForPost', $post['id']);
-        $list = array_map(function($i) { return $i[0]; }, $rows);
-        $list[] = 'rating:'.$post['rating'];
+        $rows = DB::rows('tagsForPost', $id);
+        $list = array_map(function($i) { return new Tag($i[0], $i[1], $i[2], $i[3]); }, $rows);
         return $list;
     }
 
-    // Gets the URL for the resized image (or original if no resized image present)
-    // of a post, and assumes a valid array map of the respective database row.
+    // Gets the URL for the resized image of a post (or original if no resized present).
     // The returned URL will be an absolute URL (starting with slash), without host.
     // If the post data is invalid, it will return a 404 image.
-    static function imageUrl($post)
+    // If $type is set, an URL for a specific representation of the image will be returned.
+    // Note that it will not check if the representation asked for actually exists.
+    static function imageUrl($post, $type = null)
     {
-        if (!isset($post['md5'], $post['file_ext'])) return CHRISTINA_404;
+        if (!$post) return CHRISTINA_404;
 
-        $md5 = $post['md5'];
-        $ext = $post['file_ext'];
         $base = '/data';
+        $md5 = $post->md5;
+        $ext = $post->ext;
 
-        // Prefer a resized sample.
-        if (@$post['sample_size'])
+        // Should we directly return a specific type, or try to make a sensible decision?
+        // By the way, there are few times I think a switch is even readable,
+        // but this one is sexy!
+        if ($type) switch ($type)
         {
-            return "$base/sample/$md5.jpg";
+            case 'original':  return "$base/image/$md5.$ext";
+            case 'sample':    return "$base/sample/$md5.jpg";
+            case 'jpeg':      return "$base/jpeg/$md5.jpg";
+            case 'thumbnail': return "$base/preview/$md5.jpg";
         }
 
+        // Prefer a resized sample.
+        if ($post->sample) return Posts::imageUrl($post, 'sample');
+
         // Otherwise just serve the original.
-        return "$base/image/$md5.$ext";
+        return Posts::imageUrl($post, 'original');
     }
 
     // Shows a post image to the user.
     static function showImage($id)
     {
         $post = Posts::get($id);
-        $tags = Posts::getTags((array)$post);
-        
+
         if ($post)
         {
-            if (Blacklists::check($tags))
+            if (Blacklists::check($post))
             {
                 Response::showBlacklistedImage();
             }
@@ -70,17 +77,14 @@ class Posts
     static function showJson($id, $min = true)
     {
         $post = Posts::get($id);
-        $tags = Posts::getTags((array)$post);
-        
+
         $response = [
             'version' => CHRISTINA_VERSION,
-            'success' => !!$post,
-            'display' => Posts::imageUrl((array)$post),
-            'raw' => (array)$post,
-            'tags' => $tags
+            'success' => !!$post
         ];
 
-        $response['blacklisted'] = Blacklists::check($tags);
+        if ($post) $response += $post->representation();
+
         $flags = JSON_NUMERIC_CHECK;
         if (!$min) $flags |= JSON_PRETTY_PRINT;
         $json = json_encode($response, $flags);
@@ -91,13 +95,22 @@ class Posts
     static function showHtml($id)
     {
         $post = Posts::get($id);
-        $tags = Posts::getTags((array)$post);
-        Template::display('post', ['postInfo' => compact('post', 'tags')]);
+        Template::display('post', compact('post'));
     }
 
     // Gets the last post ID (the latest post, most likely).
     static function lastId()
     {
         return DB::object('lastPostId')['id'];
+    }
+
+    // Expands a rating character into a word.
+    static function expandRating($char, $ignoreErrors = false)
+    {
+        $char = $char[0];
+        $expansions = ['s' => 'safe', 'q' => 'questionable', 'e' => 'explicit'];
+        if (isset($expansions[$char])) return $expansions[$char];
+        if ($ignoreErrors) return $expansions['q']; // Sensible default.
+        throw new \Exception();
     }
 }

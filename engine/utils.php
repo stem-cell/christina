@@ -7,7 +7,7 @@ function using($name)
 {
     if (substr($name, 0, 3) == '../')
     {
-        require_once Enivronment::resolve($name);
+        require_once Environment::resolve($name);
     }
     else
     {
@@ -99,4 +99,93 @@ function requireDir($path)
             require_once $file->getPathname();
         }
     }
+}
+
+// Converts a datetime to ISO 8601 format (used by JavaScript for example).
+function isoDate($datetime)
+{
+    // We accept a string/timestamp representation or a proper datetime.
+    if (!($datetime instanceof \DateTime)) $datetime = new \DateTime($datetime);
+    return $datetime->format('c');
+}
+
+// Converts a datetime to a format readable by a human.
+// Yes, the ISO format is readable but the idea is to have something even more readable.
+function humanDate($datetime)
+{
+    // We accept a string/timestamp representation or a proper datetime.
+    if (!($datetime instanceof \DateTime)) $datetime = new \DateTime($datetime);
+
+    // Currently we're not doing as much as we'd like to.
+    return $datetime->format("Y-m-d H:i:s");
+}
+
+// Returns true if the variable is of a particular type or class.
+function is($var, $typeOrClass)
+{
+    $type = gettype($var);
+
+    if ($type === 'object')
+    {
+        if (!is_a($var, $typeOrClass))
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if ($type !== $typeOrClass)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Checks if all values in an array evaluate to true.
+function allAreTrue(array $array)
+{
+    foreach ($array as $value)
+    {
+        if (!$value) return false;
+    }
+
+    return true;
+}
+
+// Returns true if one, and only one, of the items in the array is true.
+function oneIsTrue($array)
+{
+    $trues = 0; // Count of truthy values.
+
+    foreach ($array as $value)
+    {
+        if ($value) $trues++;
+    }
+
+    return $trues === 1;
+}
+
+// Gets all subclasses of a class.
+// Taken from http://stackoverflow.com/a/3470032/124119
+function getSubclassesOf($parent)
+{
+    $result = array();
+
+    foreach (get_declared_classes() as $class)
+    {
+        if (is_subclass_of($class, $parent)) $result[] = $class;
+    }
+
+    return $result;
+}
+
+// Logical biconditional, or XNOR (eXclusive Not OR).
+// I'm just making this a function because it's more clear than
+// writing an equality check.
+// In plain english: if a, then b. if not a, then the opposite of b.
+function xnor($a, $b)
+{
+    return !!$a === !!$b;
 }

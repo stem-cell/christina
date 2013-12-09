@@ -19,7 +19,7 @@ class Routes
     // route name separated by a pipe (as in 'get|features').
     // These will be called with the parameter string and should
     // either return a parsed, sanitized representation of the
-    // parameter string from the query or raise an exception.
+    // parameter string from the request or raise an exception.
     static $param = [];
 
     // Regular expression that represents a valid route.
@@ -30,9 +30,9 @@ class Routes
     static function isValid()
     {
         Routes::init();
-        $valid = preg_match(Routes::$pattern, Query::raw(), $route);
+        $valid = preg_match(Routes::$pattern, Request::raw(), $route);
         if (!$valid) return false;
-        $routes = Routes::forMethod(Query::method());
+        $routes = Routes::forMethod(Request::method());
         return isset($routes[$route['name']]);
     }
 
@@ -52,13 +52,13 @@ class Routes
     // Be sure to check if isValid() first.
     static function get()
     {
-        preg_match(Routes::$pattern, Query::raw(), $route);
-        $routes = Routes::forMethod(Query::method());
+        preg_match(Routes::$pattern, Request::raw(), $route);
+        $routes = Routes::forMethod(Request::method());
 
         return
         [
             'name' => $route['name'],
-            'method' => Query::method(),
+            'method' => Request::method(),
             'code' => $routes[$route['name']],
             'params' => isset($route['params']) ? $route['params'] : ''
         ];

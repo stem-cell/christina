@@ -1,72 +1,67 @@
 <?php namespace Christina;
 
-// Abstracts user information access.
+// Object-oriented instance of an user.
 class User
 {
-    // Gets information for the logged-in user. Returns null on failure.
-    // Upon success, the result contains id, name, level and email.
-    static function info()
-    {
-        $id = Session::get('user_id');
+    // User ID in the database.
+    public $id;
 
-        if ($id)
-        {
-            return User::byId($id);
-        }
-        else
-        {
-            return null;
-        }
+    // Username.
+    public $name;
+
+    // User level. Defined in Environment->config()->user_levels. Defaults are:
+    // [ "Unactivated" =>  0 ,
+    //   "Blocked"     => 10 ,
+    //   "Member"      => 20 ,
+    //   "Privileged"  => 30 ,
+    //   "Contributor" => 33 ,
+    //   "Janitor"     => 35 ,
+    //   "Mod"         => 40 ,
+    //   "Admin"       => 50 ]
+    public $level;
+
+    // User's e-mail.
+    public $email;
+
+    // User's password hash.
+    public $passHash;
+
+    // User's avatar (instance of Avatar class).
+    public $avatar;
+
+    // Extended metadata cache.
+    private $metadata;
+
+    // Build an user from an ID.
+    function __construct($id)
+    {
+        $user = DB::object('userById', $id);
+        $this->id = $id;
+        $this->name = $user['name'];
+        $this->level = $user['level'];
+        $this->email = $user['email'];
+        $this->passHash = $user['password_hash'];
+        $avatarTimestamp = strtotime($user['avatar_timestamp']);
+        $this->avatar = new Avatar($this, $user['avatar_post_id'], $avatarTimestamp);
     }
 
-    // Gets an user's information by ID, caching as appropriate.
-    // Upon success, the result contains id, name, level and email.
-    static function byId($id)
+    // Extended metadata about the user.
+    function metadata()
     {
-        if (isset($GLOBALS["christina-user-$id"]))
-        {
-            return $GLOBALS["christina-user-$id"];
-        }
-        else
-        {
-            $user = DB::object('userById', $id);
-            $user['id'] = $id;
-            return $GLOBALS["christina-user-$id"] = $user;
-        }
+        if ($this->metadata) return $this->metadata;
+        return $this->metadata = (array)DB::object('userMetadataById', $this->id);
     }
 
-    // The following functions use the helper below to easily
-    // retrieve specific user data by shorthands.
-    // If no ID is specified, it reads the current user's info,
-    // and if also the user isn't logged in, null is returned.
-    static function prop($name, $id)
+    // Returns an array with public data about the user.
+    // This data is for example what might be sent as JSON publicly.
+    // In other words, this data should only include a basic public profile.
+    function publicData()
     {
-        $info = $id ? User::byId($id) : User::info();
-        if (!$info) return null;
-        else return $info[$name];
-    }
-
-    // Gets the user's name.
-    static function name($id = null)
-    {
-        return User::prop('name', $id);
-    }
-
-    // Gets the user's level.
-    static function level($id = null)
-    {
-        return User::prop('level', $id);
-    }
-
-    // Gets the user's e-mail.
-    static function email($id = null)
-    {
-        return User::prop('email', $id);
-    }
-
-    // Gets the current user's ID. Of course, this takes no parameters.
-    static function id()
-    {
-        return Session::get('user_id');
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'level' => $this->level,
+            'avatar' => $this->avatar->representation(),
+        ];
     }
 }
