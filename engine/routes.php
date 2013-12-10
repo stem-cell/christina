@@ -98,7 +98,7 @@ class Routes
     // Gets a valid URL to a given route.
     static function url($route)
     {
-        return $_SERVER['SCRIPT_NAME']."/$route";
+        return $_SERVER['SCRIPT_NAME']."?$route";
     }
 
     // Handles route serving or redirection for an empty root path,
