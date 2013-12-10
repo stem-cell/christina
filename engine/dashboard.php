@@ -7,7 +7,8 @@ class Dashboard
     static $guest = [
         ['Feature Support Information', 'features'],
         ['Raw PHP Information', 'phpinfo'],
-        ['Alternative Posts Viewer', 'viewer']
+        ['Alternative Posts Viewer', 'viewer'],
+        ['Debug', 'debug']
     ];
 
     // Returns a list of links (containing name, url and type) for the dashboard.
