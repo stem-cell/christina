@@ -189,3 +189,9 @@ function xnor($a, $b)
 {
     return !!$a === !!$b;
 }
+
+// Converts someStringLikeThis to some-string-like-this.
+function camelToDashes($string)
+{
+    return strtolower(preg_replace('/[A-Z]/', '-$0', $string));
+}
