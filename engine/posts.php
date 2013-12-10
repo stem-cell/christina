@@ -63,13 +63,13 @@ class Posts
             }
             else
             {
-                header('Location: '.Posts::imageUrl((array)$post));
+                Response::redirect(Posts::imageUrl($post));
                 Response::someThingsNeverChange();
             }
         }
         else
         {
-            header('Location: /404');
+            Response::redirect('/404');
         }
     }
 

@@ -111,7 +111,7 @@ class Routes
     // Redirects to a given route.
     static function redirect($route)
     {
-        header('Location: '.Routes::url($route));
+        Response::redirect(Routes::url($route));
     }
 
     // Initializes routing support.

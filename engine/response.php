@@ -31,4 +31,10 @@ class Response
         var_dump($_GET);
         echo '</pre>';
     }
+
+    // Redirects to a different URL.
+    static function redirect($url)
+    {
+        header("Location: $url");
+    }
 }
