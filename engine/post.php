@@ -76,7 +76,7 @@ class Post
     function __construct($data)
     {
         // Safety check.
-        if (!$data) throw new \Exception();
+        if (!$data) throw new ParameterException();
 
         $this->parseData((array)$data);
 

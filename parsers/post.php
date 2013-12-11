@@ -23,6 +23,6 @@ Routes::$param['post'] = function($params)
     }
     else
     {
-        throw new \Exception();
+        throw new ParserException();
     }
 };

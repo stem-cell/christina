@@ -111,6 +111,6 @@ class Posts
         $expansions = ['s' => 'safe', 'q' => 'questionable', 'e' => 'explicit'];
         if (isset($expansions[$char])) return $expansions[$char];
         if ($ignoreErrors) return $expansions['q']; // Sensible default.
-        throw new \Exception();
+        throw new UnreachableException();
     }
 }

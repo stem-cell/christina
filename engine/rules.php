@@ -85,7 +85,7 @@ abstract class Rule
 
         if (!is($data, $this->type))
         {
-            throw new \Exception();
+            throw new TypeException();
         }
     }
 

@@ -17,6 +17,6 @@ Routes::$param['viewer'] = function($params)
     }
     else
     {
-        throw new \Exception();
+        throw new ParserException();
     }
 };

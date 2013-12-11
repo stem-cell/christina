@@ -23,6 +23,6 @@ Routes::$param['css'] = function($params)
     }
     else
     {
-        throw new \Exception();
+        throw new ParserException();
     }
 };
