@@ -22,14 +22,9 @@ class Users
     // Gets an User by ID.
     static function byId($id)
     {
-        if (isset($GLOBALS["christina-user-$id"]))
-        {
-            return $GLOBALS["christina-user-$id"];
-        }
-        else
-        {
-            return $GLOBALS["christina-user-$id"] = new User($id);
-        }
+        return Cache::runtime("christina-user-$id", function() {
+            return new User($id);
+        });
     }
 
     // The following functions use the helper below to easily

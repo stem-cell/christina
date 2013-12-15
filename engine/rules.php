@@ -83,7 +83,7 @@ abstract class Rule
         // Only do anything if type is set.
         if (!$this->type) return;
 
-        if (!is($data, $this->type))
+        if (!is($this->type, $data))
         {
             throw new TypeException();
         }

@@ -13,17 +13,17 @@ class DB
     // Kinda sad that we can't serialize the PDO object for moar caching goodness.
     static function connect()
     {
-        $auth = cache('pdo_bear', function() {
+        $auth = Cache::lifecycle('pdo_bear', function() {
             $configPath = Environment::resolve('../config/database.yml');
             return Yaml::parse($configPath)['production'];
         });
 
-        if (isset($GLOBALS['pdo_bear'])) return $GLOBALS['pdo_bear'];
-
-        $dsn = $auth['adapter'].':host='.$auth['host'].';dbname='.$auth['database'];
-        $pdo_bear = new \PDO($dsn, $auth['username'], $auth['password']);
-        DB::configure($pdo_bear);
-        return $GLOBALS['pdo_bear'] = $pdo_bear;
+        return Cache::runtime('pdo_bear', function() {
+            $dsn = $auth['adapter'].':host='.$auth['host'].';dbname='.$auth['database'];
+            $pdo_bear = new \PDO($dsn, $auth['username'], $auth['password']);
+            DB::configure($pdo_bear);
+            return $pdo_bear;
+        });
     }
 
     // Configure a PDO object with desired settings.
@@ -75,11 +75,12 @@ class DB
     // Database::getSql('myQueryName');
     static function getSql($camelCaseName)
     {
-        if (isset(DB::$queries[$camelCaseName])) return DB::$queries[$camelCaseName];
-        $name = camelToDashes($camelCaseName);
-        $base = dirname(__DIR__);
-        $path = "$base/sql/$name.sql";
-        $code = @file_get_contents($path);
-        return DB::$queries[$camelCaseName] = $code ? $code : null;
+        return Cache::variable(DB::$queries[$camelCaseName], function () {
+            $name = camelToDashes($camelCaseName);
+            $base = dirname(__DIR__);
+            $path = "$base/sql/$name.sql";
+            $code = @file_get_contents($path);
+            return $code ? $code : null;
+        });
     }
 }

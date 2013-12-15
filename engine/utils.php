@@ -121,7 +121,7 @@ function humanDate($datetime)
 }
 
 // Returns true if the variable is of a particular type or class.
-function is($var, $typeOrClass)
+function is($typeOrClass, $var)
 {
     $type = gettype($var);
 
@@ -194,4 +194,12 @@ function xnor($a, $b)
 function camelToDashes($string)
 {
     return strtolower(preg_replace('/[A-Z]/', '-$0', $string));
+}
+
+// Ensures that a variable is of a specific type or class.
+// For example: ensure('string', $type);
+// (for obvious reasons we're not including that in the function).
+function ensure($type, $var)
+{
+    if (!is($type, $var)) throw TypeException();
 }
