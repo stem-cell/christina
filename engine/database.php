@@ -18,7 +18,7 @@ class DB
             return Yaml::parse($configPath)['production'];
         });
 
-        return Cache::runtime('pdo_bear', function() {
+        return Cache::runtime('pdo_bear', function() use ($auth) {
             $dsn = $auth['adapter'].':host='.$auth['host'].';dbname='.$auth['database'];
             $pdo_bear = new \PDO($dsn, $auth['username'], $auth['password']);
             DB::configure($pdo_bear);
@@ -75,7 +75,7 @@ class DB
     // Database::getSql('myQueryName');
     static function getSql($camelCaseName)
     {
-        return Cache::variable(DB::$queries[$camelCaseName], function () {
+        return Cache::variable(DB::$queries[$camelCaseName], function () use ($camelCaseName) {
             $name = camelToDashes($camelCaseName);
             $base = dirname(__DIR__);
             $path = "$base/sql/$name.sql";

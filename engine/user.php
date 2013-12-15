@@ -48,8 +48,9 @@ class User
     // Extended metadata about the user.
     function metadata()
     {
-        if ($this->metadata) return $this->metadata;
-        return $this->metadata = (array)DB::object('userMetadataById', $this->id);
+        Cache::variable($this->metadata, function() {
+            return (array)DB::object('userMetadataById', $this->id);
+        });
     }
 
     // Returns an array with public data about the user.

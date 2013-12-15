@@ -128,8 +128,9 @@ class Post
     // Tags array, containing a list of tag objects.
     function tags()
     {
-        if ($this->tags) return $this->tags;
-        return $this->tags = Posts::getTags($this->id);
+        return Cache::variable($this->tags, function() {
+            return Posts::getTags($this->id);
+        });
     }
 
     // Returns the post data into a format that can be sent over the wire.
