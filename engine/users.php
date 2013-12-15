@@ -22,7 +22,7 @@ class Users
     // Gets an User by ID.
     static function byId($id)
     {
-        return Cache::runtime("christina-user-$id", function() {
+        return Cache::runtime("christina-user-$id", function() use ($id) {
             return new User($id);
         });
     }
