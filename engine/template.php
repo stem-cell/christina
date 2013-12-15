@@ -18,4 +18,13 @@ class Template
     {
         echo Minify::html(Template::render($name, $vars));
     }
+
+    // Helper function to format and output a page.
+    static function page($name, $title, $vars = [])
+    {
+        $vars['title'] = "$title - Christina";
+        $vars['contents'] = Template::render("$name-body", $vars);
+        $vars['css'] = ['normalize', $name, CSS::fonts];
+        echo Template::render('boilerplate', $vars);
+    }
 }
