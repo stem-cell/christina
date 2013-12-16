@@ -8,9 +8,7 @@
     </aside>
     <aside class="tags">
         <ul>
-            <?php foreach ($post->tags() as $tag)
-                echo Template::render('post-tag', compact('tag'));
-            ?>
+            <?= Template::render('post-tags', compact('post')); ?>
         </ul>
     </aside>
 </div>

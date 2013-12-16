@@ -17,7 +17,7 @@ class Tag
     public $isAmbiguous;
 
     // A cached version of ->typeName().
-    public $typeName;
+    private $typeName;
 
     // Build a tag model from raw data describing it.
     function __construct($name, $postCount, $tagType, $isAmbiguous)
@@ -75,7 +75,7 @@ class Tag
     {
         return [
             'name'      => $this->name,
-            'type'      => $this->typeName,
+            'type'      => $this->typeName(),
             'postCount' => $this->postCount
         ];
     }

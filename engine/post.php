@@ -129,7 +129,7 @@ class Post
     function tags()
     {
         return Cache::variable($this->tags, function() {
-            return Posts::getTags($this->id);
+            return sortByProp(Posts::getTags($this->id), 'postCount', true);
         });
     }
 
@@ -175,6 +175,14 @@ class Post
         $url    = Posts::imageUrl($this, $type);
         if ($width) $var = new Image($width, $height, $size, $url);
     }
+
+    // These functions get an array of tags of a specific type.
+    function   generalTags() { return filterByMethod($this->tags(),   'isGeneral'); }
+    function    artistTags() { return filterByMethod($this->tags(),    'isArtist'); }
+    function copyrightTags() { return filterByMethod($this->tags(), 'isCopyright'); }
+    function characterTags() { return filterByMethod($this->tags(), 'isCharacter'); }
+    function    circleTags() { return filterByMethod($this->tags(),    'isCircle'); }
+    function     faultTags() { return filterByMethod($this->tags(),     'isFault'); }
 
     // Checks if the post has a given tag, by name.
     // It also accepts the * wildcard (like 'tag*').

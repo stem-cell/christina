@@ -203,3 +203,35 @@ function ensure($type, $var)
 {
     if (!is($type, $var)) throw TypeException();
 }
+
+// Filters an array by calling a method on all its objects and
+// checking if it returns true.
+function filterByMethod($array, $methodName)
+{
+    return array_filter($array, function($i) use ($methodName) {
+        return $i->$methodName();
+    });
+}
+
+// Sorts an array by a property of all its objects.
+// You know, I was thinking about http://stackoverflow.com/questions/1462503
+// and it occurred to me that this solution is better for a couple of reasons.
+function sortByProp($array, $propName, $reverse = false, $sortFlags = SORT_REGULAR)
+{
+    $sorted = [];
+
+    foreach ($array as $item)
+    {
+        $sorted[$item->$propName][] = $item;
+    }
+
+    if ($reverse) krsort($sorted); else ksort($sorted);
+    $result = [];
+
+    foreach ($sorted as $subArray) foreach ($subArray as $item)
+    {
+        $result[] = $item;
+    }
+
+    return $result;
+}
