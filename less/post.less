@@ -10,24 +10,28 @@
         .above;
         .fill;
         .transition(all 1s @easeOutCubic);
+
         &:hover {
             .opaque;
             .bkg(@mainBkg);
         }
+
         & > aside {
             margin-top: 64px;
             .absolute;
             .auto-overflow;
-            .text-left;
             .line(22px);
         }
+
         p {
             .reset;
         }
     }
+
     img {
         .smart-center;
     }
+
     .hover {
         margin: 12px 16px;
         padding: 0 6px 3px 6px;
@@ -37,22 +41,44 @@
         .right0;
         .bkg(fade(@mainBkg, 40%));
     }
+
     &:hover .hover {
         .hidden;
     }
-    .tags {
+
+    .metadata {
         .rtl;
         .dock-left(50%);
+        .text-left;
+
         & > .content {
             padding-left: 16px;
             .ltr;
         }
     }
-    .metadata {
+
+    .tags {
         padding-right: 16px;
         .dock-right(50%);
+        .text-right;
+
+        & > ul {
+            .clean-list;
+        }
+
+        a {
+            .no-underline;
+        }
     }
+
     h2 {
         margin: 14px 0;
     }
+
+    .tag-general   > a { color: #EE8887; }
+    .tag-artist    > a { color: #CC0;    }
+    .tag-copyright > a { color: #D0D;    }
+    .tag-character > a { color: #0A0;    }
+    .tag-circle    > a { color: #0BB;    }
+    .tag-fault     > a { color: #FF2020; }
 }

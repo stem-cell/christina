@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title><?php html($title); ?></title>
+    <title><?= html($title); ?></title>
     <?php if (isset($css)) foreach ($css as $name) CSS::link($name); ?>
 </head>
 

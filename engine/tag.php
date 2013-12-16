@@ -63,6 +63,13 @@ class Tag
         return 'undefined';
     }
 
+    // Returns the URL that should be loaded when clicking on a tag.
+    function url()
+    {
+        $name = urlencode($this->name);
+        return "/post?tags=$name";
+    }
+
     // Returns the tag data into a format that can be sent over the wire.
     function representation()
     {
