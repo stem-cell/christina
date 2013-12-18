@@ -65,4 +65,10 @@ class User
             'avatar' => $this->avatar->representation(),
         ];
     }
+
+    // Returns a link to the user's profile URL.
+    function profileUrl()
+    {
+        return "/user/show/{$this->id}";
+    }
 }

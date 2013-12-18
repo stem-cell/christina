@@ -1,3 +1,5 @@
+-- This is pretty much everything except the following columns:
+-- `id`, `ip_addr`, `preview_width`, `preview_height` and `random`
 SELECT
     user_id,
     file_size,

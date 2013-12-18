@@ -1,0 +1,37 @@
+// This contains the styles necessary to display user-inline templates.
+
+.christina {
+    .inline-user {
+        margin-left: 2px;
+        color: #F8F8F8;
+        padding: 0 0 2px 4px;
+        .no-underline;
+        .relative;
+        .bkg(rgba(128, 128, 128, 0.5));
+
+        &:hover {
+            color: #FFF;
+            .bkg(rgba(192, 192, 192, 0.7));
+
+            & > .name {
+                .underline;
+            }
+        }
+
+        .pic {
+            .relative;
+            .inline-block;
+            .size(1em);
+            .topleft;
+            .v-align(-0.15em);
+
+            & > img {
+                .smart-center;
+            }
+        }
+
+        .name {
+            padding: 0 4px 0 2px;
+        }
+    }
+}

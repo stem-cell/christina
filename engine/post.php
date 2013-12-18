@@ -146,7 +146,7 @@ class Post
             'commented'      => $this->commented ? isoDate($this->commented) : null,
             'noted'          => $this->noted     ? isoDate($this->noted)     : null,
             'owner'          => $this->owner->publicData(),
-            'approver'       => $this->approver ? $this->approver->publicData()   : null,
+            'approver'       => $this->approver ? $this->approver->publicData() : null,
             'image'          => $this->image->representation(),
             'thumb'          => $this->thumb->representation(),
             'sample'         => $this->sample ? $this->sample->representation() : null,
@@ -205,5 +205,27 @@ class Post
         }
 
         return false;
+    }
+
+    // Returns the post's child count.
+    function childCount()
+    {
+        return DB::object('childCountForPost', $this->id)['count'];
+    }
+
+    // Returns an object representing the last Comment, if any.
+    function lastComment()
+    {
+        $data = DB::object('lastCommentForPost', $this->id);
+        if (!$data) return null;
+        return new Comment((array)$data);
+    }
+
+    // Returns an object representing the last Note, if any.
+    function lastNote()
+    {
+        $data = DB::object('lastNoteForPost', $this->id);
+        if (!$data) return null;
+        return new Note((array)$data);
     }
 }

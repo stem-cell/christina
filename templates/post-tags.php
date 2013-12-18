@@ -1,8 +1,9 @@
 <?php namespace Christina;
 
-foreach (   $post->circleTags() as $tag) echo Template::render('post-tag', compact('tag'));
-foreach (   $post->artistTags() as $tag) echo Template::render('post-tag', compact('tag'));
-foreach ($post->copyrightTags() as $tag) echo Template::render('post-tag', compact('tag'));
-foreach ($post->characterTags() as $tag) echo Template::render('post-tag', compact('tag'));
-foreach (  $post->generalTags() as $tag) echo Template::render('post-tag', compact('tag'));
-foreach (    $post->faultTags() as $tag) echo Template::render('post-tag', compact('tag'));
+if ($tags =    $post->circleTags()) echo Template::tagGroup($tags, 'Circle');
+if ($tags =    $post->artistTags()) echo Template::tagGroup($tags, 'Artist');
+if ($tags = $post->copyrightTags()) echo Template::tagGroup($tags, 'Copyright');
+if ($tags = $post->characterTags()) echo Template::tagGroup($tags, 'Character');
+if ($tags =     $post->faultTags()) echo Template::tagGroup($tags, 'Faults');
+if ($tags =   $post->generalTags()) echo Template::tagGroup($tags, 'Tags');
+

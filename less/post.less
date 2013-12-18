@@ -2,6 +2,7 @@
 
 @import "lib/common";
 @import "lib/pages";
+@import "lib/user-inline";
 
 .christina {
     .info {
@@ -18,6 +19,7 @@
 
         & > aside {
             margin-top: 64px;
+            padding-bottom: 16px;
             .absolute;
             .auto-overflow;
             .line(22px);
@@ -63,6 +65,7 @@
         .text-right;
 
         & > ul {
+            margin: 0;
             .clean-list;
         }
 
@@ -79,10 +82,20 @@
         margin: 14px 0;
     }
 
+    h3 {
+        margin: 14px 0 0 0;
+        .lowercase;
+        .small-caps;
+    }
+
     .tag-general   > a { color: #EE8887; }
     .tag-artist    > a { color: #CC0;    }
     .tag-copyright > a { color: #D0D;    }
     .tag-character > a { color: #0A0;    }
     .tag-circle    > a { color: #0BB;    }
     .tag-fault     > a { color: #FF2020; }
+
+    td {
+        padding-right: 16px;
+    }
 }

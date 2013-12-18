@@ -88,6 +88,16 @@
 .bottom0 () { bottom: 0; }
 .left0   () { left:   0; }
 
+.topleft     (@top, @left )    { top:    @top;    left:  @left;  }
+.topright    (@top, @right)    { top:    @top;    right: @right; }
+.bottomleft  (@bottom, @left ) { bottom: @bottom; left:  @left;  }
+.bottomright (@bottom, @right) { bottom: @bottom; right: @right; }
+
+.topleft     (@both: 0) { .topleft    (@both, @both); }
+.topright    (@both: 0) { .topright   (@both, @both); }
+.bottomleft  (@both: 0) { .bottomleft (@both, @both); }
+.bottomright (@both: 0) { .bottomright(@both, @both); }
+
 .dock-top    () { .top0;   .right0;  .left0;   }
 .dock-right  () { .top0;   .right0;  .bottom0; }
 .dock-bottom () { .right0; .bottom0; .left0;   }
@@ -332,8 +342,8 @@
     vertical-align: bottom;
     max-height: 100%;
     max-width: 100%;
-    position:absolute;
-    margin:auto;
+    position: absolute;
+    margin: auto;
     .fill;
 }
 
@@ -362,3 +372,10 @@
 // Goddamn lists.
 
 .clean-list() { list-style-type: none; }
+
+// Case for the lazy.
+
+.lowercase () { text-transform: lowercase;  }
+.uppercase () { text-transform: uppercase;  }
+.capitalize() { text-transform: capitalize; }
+.small-caps() { font-variant:   small-caps; }

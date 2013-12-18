@@ -7,9 +7,7 @@
         </div>
     </aside>
     <aside class="tags">
-        <ul>
-            <?= Template::render('post-tags', compact('post')); ?>
-        </ul>
+        <?= Template::render('post-tags', compact('post')); ?>
     </aside>
 </div>
 <span class="hover">Hover for Info</span>

@@ -34,4 +34,13 @@ class Image
         if ($this->url) $representation['url'] = $this->url;
         return $representation;
     }
+
+    // Returns a string containing the image's resolution information in a condensed format.
+    function resolution($showMegapixels = true)
+    {
+        $width = $this->width;
+        $height = $this->height;
+        $mp = round(($width * $height) / 1000000, 2);
+        return "{$width} x {$height}" . ($showMegapixels ? " ($mp MP)" : '');
+    }
 }
