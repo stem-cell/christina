@@ -1,3 +1,4 @@
+-- Gets the last note for a post by the post's ID.
 SELECT
     id,
     post_id,

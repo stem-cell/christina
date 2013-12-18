@@ -1,6 +1,7 @@
--- This is pretty much everything except the following columns:
--- `id`, `ip_addr`, `preview_width`, `preview_height` and `random`
+-- Gets a post by ID.
 SELECT
+    -- This is pretty much everything except the following columns:
+    -- `id`, `ip_addr`, `preview_width`, `preview_height` and `random`
     user_id,
     file_size,
     md5,

@@ -1,3 +1,4 @@
+-- Selects avatar metadata from a given user's ID.
 SELECT
     avatar_width,
     avatar_height,

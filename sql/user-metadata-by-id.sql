@@ -1,3 +1,4 @@
+-- Gets an user's extended data by ID.
 SELECT
     created_at,
     my_tags,

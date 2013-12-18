@@ -1,3 +1,4 @@
+-- Gets an user's basic data by ID.
 SELECT
     name,
     password_hash,

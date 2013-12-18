@@ -1,3 +1,4 @@
+-- Gets a note by ID.
 SELECT
     post_id,
     user_id,

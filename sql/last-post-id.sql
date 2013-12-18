@@ -1,3 +1,4 @@
+-- Gets the ID of the last post in the posts table.
 SELECT
     id
 FROM
