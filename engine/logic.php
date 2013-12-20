@@ -13,17 +13,24 @@ class Logic
     {
         Logic::init();
 
-        if (Routes::isValid())
+        try
         {
-            Routes::call();
+            if (Routes::isValid())
+            {
+                Routes::call();
+            }
+            else if (Request::isEmpty())
+            {
+                Routes::home();
+            }
+            else
+            {
+                Response::youProbablyDontKnowWhatYouAreDoing();
+            }
         }
-        else if (Request::isEmpty())
+        catch (UnimplementedException $e)
         {
-            Routes::home();
-        }
-        else
-        {
-            Response::youProbablyDontKnowWhatYouAreDoing();
+            Errors::show(501, ['feature' => $e->feature]);
         }
     }
 
@@ -31,8 +38,9 @@ class Logic
     static function init()
     {
         if (Logic::$initialized) return;
-        else Logic::$initialized = true;
         
         Rules::init();
+
+        Logic::$initialized = true;
     }
 }

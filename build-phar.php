@@ -4,7 +4,7 @@ require_once __DIR__.'/engine/minifier.php';
 
 // Configuration.
 $rootFiles = 'boot.php'; // Both this and the next lines are regular expressions.
-$rootFolders = 'engine|images|templates|libs|css|routes|parsers|rules|sql';
+$rootFolders = 'engine|images|templates|libs|css|routes|parsers|rules|sql|errors';
 $pharFile = __DIR__.'/release/christina.phar'; // Output file.
 $stub = __DIR__.'/phar-stub.php'; // Phar stub.
 $debug = false; // On debug mode, files are not minified.

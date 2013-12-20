@@ -1,0 +1,50 @@
+.christina ::-moz-selection {
+  background: #5379bf;
+  color: #eeeeee;
+  text-shadow: none;
+}
+.christina ::selection {
+  background: #5379bf;
+  color: #eeeeee;
+  text-shadow: none;
+}
+.christina {
+  font: 16px Ubuntu, sans-serif;
+}
+.christina {
+  color: #eeeeee;
+  background: #444444;
+  text-align: center;
+}
+.christina h1 {
+  font: 300 normal 53px Ubuntu, sans-serif;
+}
+.christina h1 > b {
+  color: #cccccc;
+}
+.christina h2 {
+  font: 300 normal 32px Ubuntu, sans-serif;
+}
+.christina footer {
+  height: 22px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  background: #666666;
+  padding: 12px 0 14px 0;
+  line-height: 22px;
+}
+.christina a.button {
+  color: #eeeeee;
+  background: #376094;
+  text-decoration: none;
+  padding: 0 6px 3px 6px;
+}
+.christina a.button:hover,
+.christina a.button:focus {
+  background: #5379bf;
+}
+.christina a.button:active {
+  background: #376094;
+}
