@@ -7,10 +7,34 @@ class Images
     // Common file extensions (.png, .jpg and .gif) may be omitted.
     static function get($name)
     {
+        $base = dirname(__DIR__)."/images";
+        Images::addExtension($name);
+        return file_get_contents("$base/$name");
+    }
+
+    // Gets the URL for an image hosted internally by Christina.
+    static function url($name)
+    {
+        Images::addExtension($name);
+        return Routes::url("image/$name");
+    }
+
+    // Adds the proper extension for a lone image filename.
+    static function addExtension(&$name)
+    {
         $base = dirname(__DIR__)."/images/$name";
-        if (file_exists("$base.png")) return file_get_contents("$base.png");
-        if (file_exists("$base.jpg")) return file_get_contents("$base.jpg");
-        if (file_exists("$base.gif")) return file_get_contents("$base.gif");
-        return file_get_contents("$base");
+
+        foreach (['png', 'jpg', 'gif'] as $ext)
+        {
+            if (file_exists("$base.$ext")) return $name = "$name.$ext";
+        }
+
+        return $name;
+    }
+
+    // Checks if an image exists. Does not auto-append an extension.
+    static function exists($name)
+    {
+        return file_exists(dirname(__DIR__)."/images/$name");
     }
 }

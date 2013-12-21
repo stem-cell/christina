@@ -37,4 +37,32 @@ class Response
     {
         header("Location: $url");
     }
+
+    // Outputs a MIME (content-type) header for the given format.
+    // The format can be given as a simple extension and it'll try to figure it out.
+    // If the parsed MIME type is a text type, an UTF-8 encoding will be assumed.
+    static function mimetype($type)
+    {
+        $type = strtolower($type);
+
+        $types = [
+            'gif' => 'image/gif',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'text/javascript', // Obsolete, but see stackoverflow.com/a/4101763/124119
+        ];
+
+        if (isset($types[$type])) $type = $types[$type];
+
+        $header = "content-type: $type";
+        $baseType = explode('/', $type)[0];
+
+        if ($baseType === 'text') $header .= '; charset=utf-8';
+
+        header($header);
+    }
 }

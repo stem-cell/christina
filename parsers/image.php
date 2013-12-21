@@ -3,16 +3,17 @@
 // This file contains a parameter handler.
 // Look at engine/routes.php to understand what is that about.
 
-// Post viewer parameters - simple format of /viewer/[123]
-Routes::$param['viewer'] = function($params)
+// Image handler parameters - simple format of /image/name[.ext]
+Routes::$param['image'] = function($params)
 {
-    $re = '~^(?<id>[0-9]+)?$~';
+    $re = '~^(?<name>[a-zA-Z0-9_-]+)(\.(?<ext>jpe?g|png|gif))?$~';
 
     if (preg_match($re, $params, $matches))
     {
         return
         [
-            'id' => isset($matches['id']) ? $matches['id'] : null
+            'name' => $matches['name'],
+            'ext' => isset($matches['ext']) ? normalizeExt($matches['ext']) : null
         ];
     }
     else

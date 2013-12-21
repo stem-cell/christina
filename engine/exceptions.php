@@ -27,5 +27,18 @@ class UnimplementedException extends ChristinaException
     }
 }
 
+// Exception thrown when a resource was not found.
+class NotFoundException extends ChristinaException
+{
+    // Resource name.
+    public $resource = '';
+
+    // Build from a given resource name, or none at all.
+    function __construct($resource = '')
+    {
+        $this->resource = $resource;
+    }
+}
+
 // If this exception gets thrown, please give me a cup of coffee.
 class UnreachableException extends ChristinaException {}

@@ -350,3 +350,24 @@ function plural($count, $name, $pluralName = null)
     if (!$pluralName) $pluralName = "{$name}s";
     return "$count $pluralName";
 }
+
+// Normalizes an extension, lowercasing it and mapping
+// uncommon variations to common ones.
+function normalizeExt($ext)
+{
+    $ext = strtolower($ext);
+
+    $mappings = [
+        'jpeg' => 'jpg' // Currently we only care about this one, add more as needed.
+    ];
+
+    if (isset($mappings[$ext])) return $mappings[$ext];
+
+    return $ext;
+}
+
+// Returns filename extension, in a function call that doesn't look ugly.
+function extensionFrom($filename)
+{
+    return pathinfo($filename, PATHINFO_EXTENSION);
+}
