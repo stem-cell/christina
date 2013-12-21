@@ -21,3 +21,7 @@ if [ -f "$dev" ]; then
     cp -f release/christina.phar "$dev"
     echo "Phar copied to local XAMPP install."
 fi
+
+# Build the readme.
+codeSize="$(./code-size.sh | sed 's/^/    /')"
+awk -v r="$codeSize" '{gsub(/{{CODE_SIZE}}/,r)}1' doc/templates/README.md > README.md
