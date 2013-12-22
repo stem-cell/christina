@@ -10,6 +10,8 @@ class Http405Error extends HttpError
 
     const name = 'Method Not Allowed';
 
+    const image = 'http-405';
+
     function parse($params = [])
     {
         $used = strtoupper(Request::method());

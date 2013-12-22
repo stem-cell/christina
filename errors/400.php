@@ -10,5 +10,7 @@ class Http400Error extends HttpError
 
     const name = 'Bad Request';
 
+    const image = 'http-400';
+
     public $description = 'The request seems to be malformed or invalid.';
 }

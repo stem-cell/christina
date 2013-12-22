@@ -10,5 +10,7 @@ class Http503Error extends HttpError
 
     const name = 'Service Unavailable';
 
+    const image = 'http-503';
+
     public $description = 'The server is currently unable to handle the request.';
 }

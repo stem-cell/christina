@@ -10,5 +10,7 @@ class Http403Error extends HttpError
 
     const name = 'Forbidden';
 
+    const image = 'http-403';
+
     public $description = 'Access to the requested resource has been denied.';
 }

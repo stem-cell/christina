@@ -46,6 +46,9 @@ abstract class HttpError
     // HTTP name of this error.
     const name = 'This Line Should Be Unreachable';
 
+    // Image representing the error, if any.
+    const image = null;
+
     // Description of this error message.
     public $description = 'The developer was too lazy to provide an error message.';
 

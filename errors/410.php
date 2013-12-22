@@ -10,6 +10,8 @@ class Http410Error extends HttpError
 
     const name = 'Gone';
 
+    const image = 'http-410';
+
     function parse($params = [])
     {
         if (isset($params['resource']))

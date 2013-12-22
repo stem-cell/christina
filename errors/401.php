@@ -10,6 +10,8 @@ class Http401Error extends HttpError
 
     const name = 'Unauthorized';
 
+    const image = 'http-401';
+
     public $description = 'The request requires authentication.';
 
     function setHeaders()

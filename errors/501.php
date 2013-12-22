@@ -10,6 +10,8 @@ class Http501Error extends HttpError
 
     const name = 'Not Implemented';
 
+    const image = 'http-501';
+
     function parse($params = [])
     {
         if (isset($params['feature']))

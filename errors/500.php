@@ -10,5 +10,7 @@ class Http500Error extends HttpError
 
     const name = 'Internal Server Error';
 
+    const image = 'http-500';
+
     public $description = 'An unexpected condition prevents fulfillment of the request.';
 }

@@ -10,6 +10,8 @@ class Http404Error extends HttpError
 
     const name = 'Not Found';
 
+    const image = 'http-404';
+
     public $description = 'The resource you requested was not found.';
 
     function parse($params = [])
