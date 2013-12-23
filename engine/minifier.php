@@ -4,10 +4,14 @@ class Minify
 {
     // Minifies output HTML by regular expressions. Cool until Cthulhu gets ya:
     // http://stackoverflow.com/a/1732454/124119
-    // Also, the one who tamed this madness was this guy:
-    // http://stackoverflow.com/a/5324014/124119
+    // Don't do this at home, kids!
     static function html($html)
     {
+        // First, wipe out the HTML comments.
+        $html = preg_replace('/<!--(.*?)-->/', '', $html);
+
+        // The one who tamed the madness that follows was this guy:
+        // http://stackoverflow.com/a/5324014/124119
         $re = '%          # Collapse whitespace everywhere but in blacklisted elements.
             (?>           # Match all whitespans other than single space.
               [^\S ]\s*   # Either one [\t\r\n\f\v] and zero or more ws,
