@@ -9,6 +9,7 @@ $pharFile = __DIR__.'/release/christina.phar'; // Output file.
 $stub = __DIR__.'/phar-stub.php'; // Phar stub.
 $debug = false; // On debug mode, files are not minified.
 $compression = 'gzip'; // You can choose 'gzip', 'bzip2', or 'none'.
+$progressSteps = 10; // How many files should be processed for each dot to be output.
 
 if (!\Phar::canWrite())
 {
@@ -37,6 +38,8 @@ $phar = new \Phar($pharFile);
 $dir = new \RecursiveDirectoryIterator(__DIR__, \RecursiveDirectoryIterator::SKIP_DOTS);
 $iterator = new \RecursiveIteratorIterator($dir);
 
+$progress = 0; // counter for the dot output (which depends on the progressSteps).
+
 foreach ($iterator as $filename => $file)
 {
     $relative = strtr(substr($filename, strlen(__DIR__) + 1), '\\', '/');
@@ -61,7 +64,7 @@ foreach ($iterator as $filename => $file)
         $phar[$relative]->compress($modes[$compression]);
     }
     
-    echo '.';
+    if ($progress++ % $progressSteps === 0) echo '.';
 }
 
 echo ' ';
