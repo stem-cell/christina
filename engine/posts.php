@@ -59,12 +59,12 @@ class Posts
         {
             if (Blacklists::check($post))
             {
-                Response::showBlacklistedImage();
+                Images::show('blacklisted');
             }
             else
             {
                 Response::redirect(Posts::imageUrl($post));
-                Response::someThingsNeverChange();
+                Response::cache();
             }
         }
         else

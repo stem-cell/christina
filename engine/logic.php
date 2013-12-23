@@ -25,7 +25,7 @@ class Logic
             }
             else
             {
-                Response::youProbablyDontKnowWhatYouAreDoing();
+                Errors::show(400);
             }
         }
         catch (UnimplementedException $e)

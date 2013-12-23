@@ -15,13 +15,5 @@ Routes::$get['image'] = function($params)
         Images::addExtension($name);
     }
 
-    if (Images::exists($name))
-    {
-        Response::mimetype(extensionFrom($name));
-        echo Images::get($name);
-    }
-    else
-    {
-        throw new NotFoundException("image \"$name\"");
-    }
+    Images::show($name);
 };

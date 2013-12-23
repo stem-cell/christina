@@ -371,3 +371,18 @@ function extensionFrom($filename)
 {
     return pathinfo($filename, PATHINFO_EXTENSION);
 }
+
+// Checks if a filename has an extension, optionally from a set of expected extensions.
+function hasExtension($filename, $extensions = null)
+{
+    if (is_array($extensions))
+    {
+        $ext = implode('|', $extensions);
+    }
+    else
+    {
+        $ext = '[^.\/\\]+'; // Generic globbing of the extension.
+    }
+
+    return !!preg_match("/.*\.($ext)\$/", $filename);
+}

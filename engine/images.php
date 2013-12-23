@@ -23,10 +23,14 @@ class Images
     static function addExtension(&$name)
     {
         $base = dirname(__DIR__)."/images/$name";
+        $extensions = ['png', 'jpg', 'gif'];
 
-        foreach (['png', 'jpg', 'gif'] as $ext)
+        if (!hasExtension($name, $extensions))
         {
-            if (file_exists("$base.$ext")) return $name = "$name.$ext";
+            foreach ($extensions as $ext)
+            {
+                if (file_exists("$base.$ext")) return $name = "$name.$ext";
+            }
         }
 
         return $name;
@@ -36,5 +40,22 @@ class Images
     static function exists($name)
     {
         return file_exists(dirname(__DIR__)."/images/$name");
+    }
+
+    // Shows an image.
+    static function show($name)
+    {
+        Images::addExtension($name);
+
+        if (Images::exists($name))
+        {
+            Response::mimetype(extensionFrom($name));
+            Response::cache();
+            echo Images::get($name);
+        }
+        else
+        {
+            throw new NotFoundException("image \"$name\"");
+        }
     }
 }

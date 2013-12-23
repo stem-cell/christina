@@ -3,7 +3,7 @@
 // Serves a CSS file.
 Routes::$get['css'] = function($params)
 {
-    header('content-type: text/css; charset=utf-8');
-    if ($params['crc32']) Response::someThingsNeverChange();
+    Response::mimetype('css');
+    if ($params['crc32']) Response::cache();
     echo CSS::contents($params['name'], $params['min']);
 };
