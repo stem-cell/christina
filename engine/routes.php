@@ -67,11 +67,18 @@ class Routes
     // Calls the current route with its params.
     static function call()
     {
-        Routes::init();
-        $route = Routes::get();
-        // This next line now might throw an exception. TODO: handle it.
-        $params = Routes::parseParameters($route);
-        $route['code']($params);
+        try
+        {
+            Routes::init();
+            $route = Routes::get();
+            // This next line now might throw a ParserException.
+            $params = Routes::parseParameters($route);
+            $route['code']($params);
+        }
+        catch (ParserException $e)
+        {
+            Errors::show(400);
+        }
     }
 
     // If a parameter handler is defined for a route or method|route,

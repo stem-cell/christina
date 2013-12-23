@@ -32,6 +32,10 @@ class Logic
         {
             Errors::show(501, ['feature' => $e->feature]);
         }
+        catch (NotFoundException $e)
+        {
+            Errors::show(404, ['resource' => $e->resource]);
+        }
     }
 
     // Bootstrap anything that's necessary.

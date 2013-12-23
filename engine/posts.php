@@ -26,7 +26,7 @@ class Posts
     // Note that it will not check if the representation asked for actually exists.
     static function imageUrl($post, $type = null)
     {
-        if (!$post) return CHRISTINA_404;
+        if (!$post) return Routes::url('error/404');
 
         $base = '/data';
         $md5 = $post->md5;
@@ -69,7 +69,7 @@ class Posts
         }
         else
         {
-            Response::redirect('/404');
+            throw new NotFoundException("data for post #$id");
         }
     }
 
@@ -95,6 +95,7 @@ class Posts
     static function showHtml($id)
     {
         $post = Posts::get($id);
+        if (!$post) throw new NotFoundException("data for post #$id");
         Template::display('post', compact('post'));
     }
 
