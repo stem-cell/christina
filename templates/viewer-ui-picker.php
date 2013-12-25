@@ -4,7 +4,7 @@
         View post
         <input
             type="number"
-            name="number"
+            name="id"
             required
             title="A value between 1 and <?= Posts::lastId(); ?>"
             style="width: <?= digits(Posts::lastId()) * 9 + 22; ?>px"
