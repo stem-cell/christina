@@ -119,3 +119,42 @@
   pointer-events: none;
   cursor: default;
 }
+.christina #footer-form {
+  display: inline-block;
+}
+.christina #footer-form input {
+  border: none;
+  padding: 2px 0 2px 4px;
+  color: #cccccc;
+  font: 700 normal 16px Ubuntu, sans-serif;
+  background: #666666;
+}
+.christina #footer-form input:focus {
+  outline: none;
+  background: #888888;
+}
+.christina #post-links {
+  padding: 0 0 0 48px;
+  display: inline-block;
+  vertical-align: top;
+}
+.christina .small-button {
+  border: 0;
+  margin: 0 2px;
+  padding: 1px 6px 3px 6px;
+  color: #eeeeee;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  line-height: 20px;
+  background: #888888;
+}
+.christina .small-button:hover {
+  background: #a0a0a0;
+}
+.christina .small-button:active,
+.christina .small-button:focus {
+  outline: none;
+  background: #888888;
+}

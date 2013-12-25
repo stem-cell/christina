@@ -19,4 +19,4 @@
         <span>&#9658;</span> <!-- fat arrow to the right character -->
     </a>
 </div>
-<footer>This is a footer! Really!</footer>
+<?= Template::render('viewer-ui-footer', compact('id')); ?>

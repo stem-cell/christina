@@ -3,6 +3,9 @@
 // Abstract post access.
 class Posts
 {
+    // Cache for the last post's id. Get with ::lastId().
+    private static $lastId;
+
     // Get information about a post in a Post instance, by numerical ID.
     static function get($id)
     {
@@ -102,7 +105,9 @@ class Posts
     // Gets the last post ID (the latest post, most likely).
     static function lastId()
     {
-        return DB::object('lastPostId')['id'];
+        return Cache::variable(Posts::$lastId, function() {
+            return DB::object('lastPostId')['id'];
+        });
     }
 
     // Expands a rating character into a word.

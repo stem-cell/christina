@@ -4,15 +4,19 @@
     color: @mainColor;
     .bkg(@mainBkg);
     .text-center;
+    
     h1 {
         .title-light;
+        
         > b {
             color: @softColor;
         }
     }
+    
     h2 {
         .small-title;
     }
+    
     footer {
         height: 22px;
         .dock-bottom();
@@ -21,14 +25,17 @@
         .pad(12px 0 14px 0);
         .line(22px);
     }
+
     a.button {
         color: @mainColor;
         .bkg(@blueBkg);
         .no-underline;
         .pad(0 6px 3px 6px);
+        
         &:hover, &:focus {
             .bkg(@lightBlueBkg);
         }
+
         &:active {
             .bkg(@blueBkg);
         }
