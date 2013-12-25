@@ -119,18 +119,24 @@
   pointer-events: none;
   cursor: default;
 }
-.christina #footer-form {
+.christina #picker-form {
   display: inline-block;
 }
-.christina #footer-form input {
+.christina #picker-form input {
   border: none;
   padding: 2px 0 2px 4px;
   color: #cccccc;
   font: 700 normal 16px Ubuntu, sans-serif;
+  background: #444444;
+}
+.christina #picker-form input:focus {
+  outline: none;
   background: #666666;
 }
-.christina #footer-form input:focus {
-  outline: none;
+.christina footer #picker-form input {
+  background: #666666;
+}
+.christina footer #picker-form input:focus {
   background: #888888;
 }
 .christina #post-links {

@@ -74,7 +74,7 @@
         }
     }
 
-    #footer-form {
+    #picker-form {
         .inline-block;
 
         input {
@@ -82,12 +82,20 @@
             padding: 2px 0 2px 4px;
             color: @softColor;
             .text-bold;
-            .bkg(@lightBkg);
+            .bkg(@mainBkg);
 
             &:focus {
                 outline: none;
-                .bkg(@lighterBkg);
+                .bkg(@lightBkg);
             }
+        }
+    }
+
+    footer #picker-form input {
+        .bkg(@lightBkg);
+
+        &:focus {
+            .bkg(@lighterBkg);
         }
     }
 
