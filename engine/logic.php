@@ -11,22 +11,10 @@ class Logic
     // Start Christina.
     static function perform()
     {
-        Logic::init();
-
         try
         {
-            if (Routes::isValid())
-            {
-                Routes::call();
-            }
-            else if (Request::isEmpty())
-            {
-                Routes::home();
-            }
-            else
-            {
-                Errors::show(400);
-            }
+            Logic::init();
+            Routes::handle();
         }
         catch (UnimplementedException $e)
         {
@@ -35,6 +23,10 @@ class Logic
         catch (NotFoundException $e)
         {
             Errors::show(404, ['resource' => $e->resource]);
+        }
+        catch (\Exception $e)
+        {
+            Errors::show(500);
         }
     }
 

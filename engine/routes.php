@@ -36,6 +36,26 @@ class Routes
         return isset($routes[$route['name']]);
     }
 
+    // Checks if the current route is valid for any method at all.
+    // Returns either false or the first valid route's method.
+    static function anyIsValid()
+    {
+        Routes::init();
+        $valid = preg_match(Routes::$pattern, Request::raw(), $route);
+
+        if (!$valid) return false;
+
+        $setIn = [
+            'get' => isset(Routes::$get[$route['name']]),
+            'post' => isset(Routes::$post[$route['name']])
+        ];
+
+        foreach ($setIn as $method => $set)
+        {
+            if ($set) return $method;
+        }
+    }
+
     // Lists all the routes for the given http method.
     static function forMethod($method)
     {
@@ -130,6 +150,27 @@ class Routes
             requireDir("$base/routes");
             requireDir("$base/parsers");
             Routes::$initialized = true;
+        }
+    }
+
+    // Handles routing logic.
+    static function handle()
+    {
+        if (Routes::isValid())
+        {
+            Routes::call();
+        }
+        else if ($valid = Routes::anyIsValid())
+        {
+            Errors::show(405, ['expected' => $valid]);
+        }
+        else if (Request::isEmpty())
+        {
+            Routes::home();
+        }
+        else
+        {
+            Errors::show(400);
         }
     }
 }
