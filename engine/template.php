@@ -10,7 +10,7 @@ class Template
         extract($templateVars);
         ob_start();
         require dirname(__DIR__)."/templates/$templateName.php";
-        return ob_get_clean();
+        return trim(ob_get_clean());
     }
 
     // Minify and display rendered results. Wraps Template::render().
@@ -60,5 +60,11 @@ class Template
     static function tagGroup($tags, $title)
     {
         return Template::render('post-tag-group', compact('tags', 'title'));
+    }
+
+    // Helper function to format and return a small-button anchor.
+    static function smallButton($label, $route, $icon = '')
+    {
+        return Template::render('small-button', compact('label', 'route', 'icon'));
     }
 }

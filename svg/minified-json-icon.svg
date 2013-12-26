@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16px"
+   height="16px"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="minified-json-icon.svg">
+  <defs
+     id="defs2987" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="16"
+     inkscape:cx="7.6180093"
+     inkscape:cy="13.675518"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:snap-bbox="true"
+     inkscape:snap-grids="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="706"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2993" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="fill:#eeeeee;fill-opacity:1;stroke:none"
+       d="M 1 0 L 1 1 L 2 1 L 2 2 L 3 2 L 3 1 L 4 1 L 4 2 L 5 2 L 5 1 L 6 1 L 6 2 L 7 2 L 7 1 L 8 1 L 8 2 L 9 2 L 9 1 L 10 1 L 10 2 L 11 2 L 11 1 L 12 1 L 12 2 L 13 2 L 13 1 L 14 1 L 14 2 L 15 2 L 15 0 L 1 0 z M 14 2 L 13 2 L 13 3 L 12 3 L 12 2 L 11 2 L 11 3 L 10 3 L 10 2 L 9 2 L 9 3 L 8 3 L 8 2 L 7 2 L 7 3 L 6 3 L 6 2 L 5 2 L 5 3 L 4 3 L 4 2 L 3 2 L 3 3 L 2 3 L 2 2 L 1 2 L 1 16 L 15 16 L 15 3 L 14 3 L 14 2 z M 6 4 L 6 5 C 5 5 5 5 5 6 C 5 8 5 8.007812 4 8.53125 C 5 9.007812 5 9 5 11 C 5 12 5 12 6 12 L 6 13 C 4 13 4 13 4 11 C 4 10 4 9 3 9 L 3 8 C 4 8 4 7 4 6 C 4 4 4 4 6 4 z M 10 4 C 12 4 12 4 12 6 C 12 7 12 8 13 8 L 13 9 C 12 9 12 10 12 11 C 12 13 12 13 10 13 L 10 12 C 11 12 11 12 11 11 C 11 9 11 9.007812 12 8.53125 C 11 8.0078125 11 8 11 6 C 11 5 11 5 10 5 L 10 4 z M 7 6 L 9 6 L 9 8 L 7 8 L 7 6 z M 7 9 L 9 9 L 9 11 L 7 11 L 7 9 z "
+       id="rect2995" />
+  </g>
+</svg>

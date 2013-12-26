@@ -127,4 +127,22 @@
             .bkg(@lighterBkg);
         }
     }
+
+    .small-button.icon {
+        padding-left: 24px;
+
+        .icon-img {
+            margin: 4px 5px;
+            .absolute;
+            .inline-block;
+            .dock-left;
+            .size(16px);
+            .no-repeat;
+        }
+    }
+
+    [data-icon="html"] > .icon-img { .bkg(data-uri('../images/html-icon.png')); }
+    [data-icon="json"] > .icon-img { .bkg(data-uri('../images/json-icon.png')); }
+    [data-icon="min-json"] > .icon-img { .bkg(data-uri('../images/minified-json-icon.png')); }
+    [data-icon="image"] > .icon-img { .bkg(data-uri('../images/image-icon.png')); }
 }
