@@ -6,7 +6,7 @@
 // Image handler parameters - simple format of /image/name[.ext]
 Routes::$param['image'] = function($params)
 {
-    $re = '~^(?<name>[a-zA-Z0-9_-]+)(\.(?<ext>jpe?g|png|gif))?$~';
+    $re = '~^(?<name>[a-zA-Z0-9_-]+)(\.(?<ext>jpe?g|png|gif|ico))?$~';
 
     if (preg_match($re, $params, $matches))
     {

@@ -4,7 +4,7 @@
 class Images
 {
     // Returns the contents of the named image.
-    // Common file extensions (.png, .jpg and .gif) may be omitted.
+    // Common file extensions (.png, .jpg, .gif and .ico) may be omitted.
     static function get($name)
     {
         $base = dirname(__DIR__)."/images";
@@ -23,7 +23,7 @@ class Images
     static function addExtension(&$name)
     {
         $base = dirname(__DIR__)."/images/$name";
-        $extensions = ['png', 'jpg', 'gif'];
+        $extensions = ['png', 'jpg', 'gif', 'ico'];
 
         if (!hasExtension($name, $extensions))
         {
