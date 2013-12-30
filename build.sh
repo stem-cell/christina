@@ -23,5 +23,7 @@ if [ -f "$dev" ]; then
 fi
 
 # Build the readme.
-codeSize="$(./code-size.sh | sed 's/^/    /')"
-awk -v r="$codeSize" '{gsub(/{{CODE_SIZE}}/,r)}1' doc/templates/README.md > README.md
+codeSize="$(./code-size.sh | sed 's/^/              /')"
+pharSize=$(du -h release/christina.phar | cut -f1)
+awk -v r="$codeSize" '{gsub(/{{CODE_SIZE}}/,r)}1' doc/templates/README.md \
+| awk -v r="$pharSize" '{gsub(/{{PHAR_SIZE}}/,r)}1' > README.md
