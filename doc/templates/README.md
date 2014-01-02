@@ -24,9 +24,11 @@ The current `christina.phar` archive, whose contents are mostly minified and gzi
 
 ## Requirements
 
-Besides from the basic requirements to be running MyImoutoBooru, make sure you have the MySQL Native Drivers. If you do, you would see a section like this in your PHPInfo:
+Besides from the basic requirements to be running MyImoutoBooru, make sure you have the [MySQL Native Drivers](http://www.php.net/manual/en/book.mysqlnd.php). If you do, you would see a section like this in your PHPInfo:
 
 <p align="center"><img alt="screenshot" src="https://raw.github.com/stem-cell/christina/master/doc/images/mysqlnd.png" /></p>
+
+Note that all of Christina's requirements are pretty standard stuff that are likely installed on pretty much every PHP 5.4 installation under the sun. It is as self-contained as possible.
 
 ## License
 

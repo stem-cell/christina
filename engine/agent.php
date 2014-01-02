@@ -50,7 +50,14 @@ class Agent
 
     // IP address of the user-agent, only available through ::current().
     // Also, remember this is still not 100% reliable. Nothing in this class is.
-    public $ip = '';
+    public $ip = null;
+
+    // Autonomous System Number and ISP or organization name.
+    public $asn = 'unknown';
+    public $isp = 'unknown';
+
+    // Where the user is expected to be, as a Location object.
+    public $location = null;
 
     // Constructs an Agent instance with informations from a given user agent string.
     function __construct($userAgent)
@@ -95,7 +102,15 @@ class Agent
     {
         $userAgent = Agent::userAgent();
         $agent = new Agent($userAgent);
-        $agent->ip = $_SERVER['REMOTE_ADDR'];
+        $agent->ip = $ip = $_SERVER['REMOTE_ADDR'];
+
+        if ($geo = Agent::geoIpData($ip))
+        {
+            if ($i = $geo['asName']) $agent->isp = $i;
+            if ($i = $geo['asCode']) $agent->asn = $i;
+            $agent->location = new Location($geo);
+        }
+
         return $agent;
     }
 
@@ -108,7 +123,8 @@ class Agent
         $hash = md5($userAgent);
         $key = "user-agent-$hash";
 
-        return Cache::lifecycle($key, function() use ($userAgent) {
+        return Cache::lifecycle($key, function() use ($userAgent)
+        {
             $bc = new \phpbrowscap\Browscap(Agent::cacheDir());
             return $bc->getBrowser($userAgent, true);
         });
@@ -134,12 +150,81 @@ class Agent
         }
     }
 
+    // Gets GeoIP data for a given IP. Currently uses MaxMind's GeoIP2 databases
+    // whose licenses and downloads you can find here: http://dev.maxmind.com/geoip/
+    // If this function has any problem it will return null.
+    static function geoIpData($ip)
+    {
+        Agent::init();
+
+        // We'll use a hash of the user agent as part of the caching key.
+        $hash = md5(strtolower($ip));
+        $key = "geo-ip-data-$hash";
+
+        try
+        {
+            return Cache::lifecycle($key, function() use ($ip)
+            {
+                // Check if the IP is valid and if it's an IPv4 or IPv6.
+                if (!filter_var($ip, FILTER_VALIDATE_IP)) return null;
+                $isIpv4 = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+
+                $v = $isIpv4 ? '' : 'v6';
+                $flags = GEOIP_STANDARD;
+
+                $ipDatabasePath   = libPath("maxmind/databases/GeoIP$v.dat"); // Not used.
+                $cityDatabasePath = libPath("maxmind/databases/GeoLiteCity$v.dat");
+                $asnDatabasePath  = libPath("maxmind/databases/GeoIPASNum$v.dat");
+
+                $cityDatabase = geoip_open($cityDatabasePath, $flags);
+                $asnDatabase  = geoip_open($asnDatabasePath , $flags);
+
+                if ($isIpv4)
+                {
+                    $asn = geoip_name_by_addr($asnDatabase, $ip);
+                    $record = geoip_record_by_addr($cityDatabase, $ip);
+                }
+                else
+                {
+                    $asn = geoip_name_by_addr_v6($asnDatabase, $ip);
+                    $record = geoip_record_by_addr_v6($cityDatabase, $ip);
+                }
+
+                if (!$record) return null;
+
+                preg_match('/^((?<code>AS\d+) )?(?<name>.*)$/i', $asn, $autonomousSystem);
+
+                $result = [
+                    'countryName'   => $record->country_name,
+                    'countryCode'   => $record->country_code,
+                    'region'        => $record->region,
+                    'city'          => $record->city,
+                    'latitude'      => $record->latitude,
+                    'longitude'     => $record->longitude,
+                    'continentCode' => $record->continent_code,
+                    'asName'        => $autonomousSystem['name'],
+                    'asCode'        => $autonomousSystem['code']
+                ];
+
+                geoip_close($cityDatabase);
+                geoip_close($asnDatabase);
+
+                return $result;
+            });
+        }
+        catch (\Exception $e)
+        {
+            return null;
+        }
+    }
+
     // Loads the PHP browser capabilities library, if that hasn't been done already.
     static function init()
     {
         if (!Agent::$initialized)
         {
             lib('phpbrowscap/browscap');
+            lib('maxmind/geoip');
             Agent::$initialized = true;
         }
     }

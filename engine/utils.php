@@ -18,7 +18,14 @@ function using($name)
 // Loads a library from the lib folder. Pass it a string like 'symfony/yaml'.
 function lib($path)
 {
-    require_once dirname(__DIR__)."/libs/$path.php";
+    require_once libPath("$path.php");
+}
+
+// Returns a path from the lib folder.
+// Pass it a string like 'maxmind/databases/GeoLite2-City.mmdb'.
+function libPath($path)
+{
+    return dirname(__DIR__)."/libs/$path";
 }
 
 // Normalizes a path, handling .. references that go beyond the initial folder reference.
