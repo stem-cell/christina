@@ -10,8 +10,6 @@
 // be sent by e-mail, be posted on Usenet, be screamed by a feminist on PMS,
 // or be sent to a GCC compiler in a croudsourced attempt to eventually build Skynet.
 
-require_once __DIR__.'/engine/minifier.php';
-
 // Builds Phar archives from files and directories.
 // I'm encapsulating this because it's so cool and I may want to use it in the future.
 class PharBuilder
@@ -268,7 +266,7 @@ class PharBuilder
         if ($this->stub)
         {
             // Minify and set.
-            $stub = Minify::php($this->stub);
+            $stub = PharBuilder::minifyPhp($this->stub);
             $this->phar->setStub($stub);
         }
         else
@@ -304,7 +302,7 @@ class PharBuilder
 
         if (substr($filesystemPath, -4) == '.php' and !$this->debug)
         {
-            $content = Minify::php($content);
+            $content = PharBuilder::minifyPhp($content);
         }
 
         $this->setFile($localPath, $content);
@@ -409,6 +407,46 @@ class PharBuilder
     static private function fixSeparators($path)
     {
         return str_replace(DIRECTORY_SEPARATOR, '/', $path);
+    }
+
+    // PHP minifier. Why? Well, as Cave Johnson once said,
+    // science isn't about *why* - it's about *why not*.
+    static private function minifyPhp($code)
+    {
+        $result = '';
+        $skip = false;
+
+        foreach (token_get_all($code) as $token)
+        {
+            if ($skip)
+            {
+                $skip = false;
+            }
+            else if (is_string($token))
+            {
+                $result .= $token;
+            }
+            else
+            {
+                switch ($token[0])
+                {
+                    case T_COMMENT:
+                    case T_DOC_COMMENT:
+                        break;
+                    case T_END_HEREDOC:
+                        $result .= $token[1].";\n";
+                        $skip = true;
+                        break;
+                    case T_WHITESPACE:
+                        $result .= ' ';
+                        break;
+                    default:
+                        $result .= $token[1];
+                }
+            }
+        }
+
+        return $result;
     }
 }
 
