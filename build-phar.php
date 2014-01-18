@@ -450,11 +450,197 @@ class PharBuilder
     }
 }
 
-// Here begins code that uses the above class.
+// Alignments, used by the class below.
+define('ALIGN_LEFT'  , 1);
+define('ALIGN_RIGHT' , 2);
+define('ALIGN_CENTER', 4);
+
+// This class implements a cross-platform "line editor" for command-line output.
+// On Linux you can do lots of fancy stuff in the command-line, but not on Windows.
+// To overcome this limitation, you can restrict yourself to just editing the
+// current line, by means of echoing backspaces.
+// However, while on Windows you can echo an infinite number of backspaces and
+// it will only clear the current line, on Linux this will wipe previous lines, too.
+// The result can obviously be very messy.
+// Thus, this utility will handle remembering how many backspaces are needed,
+// echoing them, preventing newlines and such, so that you can only focus on
+// what you want to output. I might also port it to other languages later.
+class CommandLiner
+{
+    // Where to output.
+    public $target = STDOUT;
+
+    // How many columns are available in each line (most commandlines support at least 80).
+    // I'm using 79 because, I'm not sure if some console will put the cursor on the next
+    // line and screw with my backspacing or what.
+    // Note: this value will be auto-set later with a reasonably cross platform guess.
+    // I'm making it public because it may be useful to be able to just read it.
+    public $columns = 79;
+
+    // How many characters have been output (in order to be able to delete them later).
+    private $characters = 0;
+
+    // A value indicating whether the instance has been closed.
+    private $closed = false;
+
+    // Constructs an instance while being able to specify the output target.
+    // The column width may be specified; if not, it will try to guess it on Windows
+    // and most Unix OSes.
+    function __construct($target = STDOUT, $columns = null)
+    {
+        $this->columns = $columns ?: CommandLiner::crossPlatformConsoleWidth() - 1;
+        $this->target = $target;
+    }
+
+    // Clears the currently-outputted text from the command-line.
+    function clear()
+    {
+        if ($this->closed) throw new \Exception("CommandLiner instance close()d");
+
+        // We do it like this because the backspace seemingly doesn't clear text.
+        // In other words, we back up, fill with spaces, and back up again.
+        $text = str_repeat("\x08", $this->characters)
+              . str_repeat(" " , $this->characters)
+              . str_repeat("\x08", $this->characters);
+        $this->output($text);
+
+        $this->characters = 0;
+    }
+
+    // Writes a line to the output, optionally specifying alignment (default is left-align).
+    // Whatever was present in the line will be erased before writing this.
+    function write($content, $alignment = ALIGN_LEFT)
+    {
+        if ($this->closed) throw new \Exception("CommandLiner instance close()d");
+
+        $clean = CommandLiner::clean($content);
+        $clean = CommandLiner::ellipsis($clean, $this->columns);
+        $length = strlen($clean);
+
+        // We're optimizing for the least amount of characters being printed.
+        switch ($alignment)
+        {
+            case ALIGN_LEFT:
+                // First case, left alignment, involves backspacing to the line start,
+                // writing our string, filling the rest with spaces, and backspacing them.
+                $extra = max(0, $this->characters - $length);
+                $text = str_repeat("\x08", $this->characters)
+                      . $clean
+                      . str_repeat(' ', $extra)
+                      . str_repeat("\x08", $extra);
+                $chars = $length;
+                break;
+
+            case ALIGN_RIGHT:
+            case ALIGN_CENTER:
+                // Second and third case, right alignment, involves backspacing to the
+                // line start, and writing a left-padded version of the input.
+                // The third case (center alignment) could be optimized, but honestly...
+                // I'm not even sure I'd need center alignment :P
+                $padded = CommandLiner::fit($clean, $this->columns, $alignment);
+                $text = str_repeat("\x08", $this->characters) . $padded;
+                $chars = strlen($padded);
+                break;
+
+            default:
+                $msg = '$alignment must be ALIGN_LEFT, ALIGN_RIGHT or ALIGN_CENTER';
+                throw new \Exception($msg);
+                break;
+        }
+
+        $this->characters = $chars;
+        $this->output($text);
+    }
+
+    // Closes the instance, echoing a newline and prohibiting future write() or clear() calls.
+    function close()
+    {
+        echo "\n";
+        $this->closed = true;
+    }
+
+    // Outputs text to the command-line.
+    private function output($text)
+    {
+        fwrite($this->target, $text);
+    }
+
+    // Fits text in a given horizontal space with the specified alignment.
+    static function fit($text, $columns, $alignment = ALIGN_LEFT, $padding = ' ')
+    {
+        $text = CommandLiner::clean($text);
+        $length = strlen($text);
+
+        if ($length < $columns)
+        {
+            $padType = [
+                ALIGN_LEFT   => STR_PAD_RIGHT,
+                ALIGN_RIGHT  => STR_PAD_LEFT,
+                ALIGN_CENTER => STR_PAD_BOTH
+            ];
+
+            $result = str_pad($text, $columns, $padding, $padType[$alignment]);
+        }
+        else
+        {
+            $result = CommandLiner::ellipsis($text, $columns);
+        }
+
+        return $result;
+    }
+
+    // Cleans the text so it can be backspaced later.
+    // For example, it cleans it from newlines (and other control characters).
+    // Furthermore, the output is trimmed.
+    static function clean($text)
+    {
+        return trim(preg_replace('/[\x00-\x1F\x7F]/', '', $text));
+    }
+
+    // Crops and applies ellipsis to the $text if it doesn't fit in the $columns.
+    static function ellipsis($text, $columns)
+    {
+        $length = strlen($text);
+        if (!$columns) return '';
+        if ($columns === 1) return $text ? $text[0] : '.';
+        if ($columns === 2 and $length > $columns) return '..';
+        if ($columns === 3 and $length > $columns) return '...';
+        if ($length > $columns) return substr($text, 0, $columns - 3) . '...';
+        return $text;
+    }
+
+    // Gets the console width in columns, cross-platform (tested on Windows and Linux).
+    static function crossPlatformConsoleWidth()
+    {
+        // Different logic for Windows and Unix.
+        if (strncasecmp(PHP_OS, 'WIN', 3) == 0)
+        {
+            preg_match('/---+(\n[^|]+?){2}(?<cols>\d+)/', `mode`, $matches);
+            return $matches['cols'];
+        }
+        else
+        {
+            // On Unix, we just check if tput is available.
+            // Both tput and which should be present on any system that isn't Windows.
+            if (`which tput`)
+            {
+                return `tput cols`;
+            }
+            else
+            {
+                // Sensible default.
+                return 80;
+            }
+        }
+    }
+}
+
+// Here begins code that uses the above classes.
 
 try
 {
     $builder = new PharBuilder(__DIR__.'/release/christina.phar');
+    $liner = new CommandLiner();
 }
 catch (\UnexpectedValueException $e)
 {
@@ -482,15 +668,32 @@ $builder->dirs = [
 
 $builder->stub = file_get_contents(__DIR__.'/phar-stub.php');
 
-echo 'Creating Phar archive';
+$prefix1 = 'Creating Phar archive...';
+$prefix2 = 'Phar archive created.';
+$prefixSpace = 25;
+$percentageSpace = 8;
+$progressBarSpace = max(2, $liner->columns - ($prefixSpace + $percentageSpace));
+$prefix = $liner::fit($prefix1, $prefixSpace);
+$progress = '[' . $liner::fit('calculating...', $progressBarSpace - 2, ALIGN_CENTER) . ']';
+$percentage = $liner::fit('0.00%', $percentageSpace, ALIGN_RIGHT);
 
-$progressSteps = 10; // How many files should be processed for each dot to be output.
-$progress = 0; // counter for the dot output (which depends on the progressSteps).
+$liner->write("$prefix$progress$percentage");
 
 $progressCallback = function($done, $total)
 {
-    global $progressSteps, $progress;
-    if ($progress++ % $progressSteps === 0) echo '.';
+    global $liner, $prefix, $progressBarSpace, $percentageSpace;
+
+    $percentageNumber = $done * 100 / $total;
+    $percentageFormatted = sprintf('%0.2f', round($percentageNumber, 2)) . '%';
+    $percentage = $liner::fit($percentageFormatted, $percentageSpace, ALIGN_RIGHT);
+
+    // Building the progressbar is a bit more involved.
+    $barSpace = $progressBarSpace - 2;
+    $filledCount = (int)round($percentageNumber * $barSpace / 100);
+    $emptyCount = $barSpace - $filledCount;
+    $progress = '[' . str_repeat('=', $filledCount) . str_repeat(' ', $emptyCount) . ']';
+
+    $liner->write("$prefix$progress$percentage");
 };
 
 try
@@ -505,4 +708,8 @@ catch (\Exception $e)
     exit(1);
 }
 
-echo " Done.\n";
+$prefix = $liner::fit($prefix2, $prefixSpace);
+$progress = '[' . str_repeat('=', $progressBarSpace - 2) . ']';
+$percentage = $liner::fit('100.00%', $percentageSpace, ALIGN_RIGHT);
+$liner->write("$prefix$progress$percentage");
+$liner->close();
