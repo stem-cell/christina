@@ -517,6 +517,13 @@ class CommandLiner
         $clean = CommandLiner::ellipsis($clean, $this->columns);
         $length = strlen($clean);
 
+        // Specific logic for crappy consoles.
+        if (CommandLiner::isTheConsoleVeryCrappy())
+        {
+            $this->output("$clean\n");
+            return;
+        }
+
         // We're optimizing for the least amount of characters being printed.
         switch ($alignment)
         {
@@ -555,7 +562,8 @@ class CommandLiner
     // Closes the instance, echoing a newline and prohibiting future write() or clear() calls.
     function close()
     {
-        echo "\n";
+        // Crappy consoles don't need the trailing newline (we've been adding them all along).
+        if (!CommandLiner::isTheConsoleVeryCrappy()) echo "\n";
         $this->closed = true;
     }
 
@@ -633,6 +641,15 @@ class CommandLiner
             }
         }
     }
+
+    // Detects if the console is made out of e.g., monkey poo or similar scatologic material.
+    // Such fecal venues of communication cannot excrete a backspace character properly.
+    static function isTheConsoleVeryCrappy()
+    {
+        // Sublime Text's embedded console.
+        if (isset($_SERVER['__COMPAT_LAYER'])) return true;
+        return false;
+    }
 }
 
 // Here begins code that uses the above classes.
@@ -668,12 +685,10 @@ $builder->dirs = [
 
 $builder->stub = file_get_contents(__DIR__.'/phar-stub.php');
 
-$prefix1 = 'Creating Phar archive...';
-$prefix2 = 'Phar archive created.';
 $prefixSpace = 25;
 $percentageSpace = 8;
 $progressBarSpace = max(2, $liner->columns - ($prefixSpace + $percentageSpace));
-$prefix = $liner::fit($prefix1, $prefixSpace);
+$prefix = $liner::fit('Creating Phar archive...', $prefixSpace);
 $progress = '[' . $liner::fit('calculating...', $progressBarSpace - 2, ALIGN_CENTER) . ']';
 $percentage = $liner::fit('0.00%', $percentageSpace, ALIGN_RIGHT);
 
@@ -708,8 +723,7 @@ catch (\Exception $e)
     exit(1);
 }
 
-$prefix = $liner::fit($prefix2, $prefixSpace);
-$progress = '[' . str_repeat('=', $progressBarSpace - 2) . ']';
+$progress = '[' . $liner::fit('complete', $progressBarSpace - 2, ALIGN_CENTER, '=') . ']';
 $percentage = $liner::fit('100.00%', $percentageSpace, ALIGN_RIGHT);
 $liner->write("$prefix$progress$percentage");
 $liner->close();
